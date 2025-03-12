@@ -1,2 +1,3 @@
 # walkthroughs
-Somewhere to play and keep walkthroughs
+
+Somewhere to keep my notes about challenges.
