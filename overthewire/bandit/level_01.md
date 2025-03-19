@@ -63,6 +63,7 @@ To list the files in the directory, the `ls` command is used:
 ```
 bandit0@bandit:~$ ls
 readme
+bandit0@bandit:~$
 ```
 
 Excellent - the file named `readme` is in the current directory, which is the
@@ -77,6 +78,7 @@ please inform the instructor about the rules as well and encourage them to
 contribute to the OverTheWire community so we can keep these games free!
 
 The password you are looking for is: [PASSWORD REMOVED]
+bandit0@bandit:~$
 ```
 
 To confirm that the password is correct, disconnect from the server and then
@@ -114,6 +116,7 @@ The `ls` command has a `-l` flag to provide a "long" listing:
 bandit0@bandit:~$ ls -l
 total 4
 -rw-r----- 1 bandit1 bandit0 438 Sep 19 07:08 readme
+bandit0@bandit:~$
 ```
 
 There is a wealth of information here. The line for the `readme` file contains:
@@ -138,6 +141,7 @@ drwxr-xr-x 70 root    root    4096 Sep 19 07:09 ..
 -rw-r--r--  1 root    root    3771 Mar 31  2024 .bashrc
 -rw-r--r--  1 root    root     807 Mar 31  2024 .profile
 -rw-r-----  1 bandit1 bandit0  438 Sep 19 07:08 readme
+bandit0@bandit:~$
 ```
 
 This shows that there are actually six files / directories:
@@ -162,6 +166,7 @@ file2 contents
 $ cat file1 file2
 file1 contents
 file2 contents
+$
 ```
 
 ### Alternative Solutions
@@ -174,6 +179,7 @@ possibilities:
 ```
 bandit0@bandit:~$ cat
 .bash_logout  .bashrc       .profile      readme
+bandit0@bandit:~$ cat
 ```
 
 Similarly it will complete partial filenames, so typing `cat`, and a space, and
@@ -197,4 +203,5 @@ at this point, hitting TAB again will display the options:
 ```
 bandit0@bandit:~$ cat .bash
 .bash_logout  .bashrc
+bandit0@bandit:~$ cat .bash
 ```

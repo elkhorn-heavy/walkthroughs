@@ -56,6 +56,7 @@ drwxr-xr-x 70 root    root    4096 Sep 19 07:09 ..
 -rw-r--r--  1 root    root     220 Mar 31  2024 .bash_logout
 -rw-r--r--  1 root    root    3771 Mar 31  2024 .bashrc
 -rw-r--r--  1 root    root     807 Mar 31  2024 .profile
+bandit1@bandit:~$
 ```
 
 Yes indeed, there is a 33 byte file called `-` in bandit1's home directory. The
@@ -83,6 +84,7 @@ saying `-`.
 ```
 bandit1@bandit:~$ cat ./-
 [PASSWORD REMOVED]
+bandit1@bandit:~$
 ```
 
 To confirm that the password is correct, disconnect from the server and then
@@ -117,6 +119,7 @@ for the current directory:
 ```
 bandit1@bandit:~$ cat ~/-
 [PASSWORD REMOVED]
+bandit1@bandit:~$
 ```
 
 Similarly, the full path to the file could be used:
@@ -124,4 +127,5 @@ Similarly, the full path to the file could be used:
 ```
 bandit1@bandit:~$ cat /home/bandit1/-
 [PASSWORD REMOVED]
+bandit1@bandit:~$
 ```

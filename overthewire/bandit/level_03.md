@@ -58,6 +58,7 @@ drwxr-xr-x 70 root    root    4096 Sep 19 07:09 ..
 -rw-r--r--  1 root    root    3771 Mar 31  2024 .bashrc
 -rw-r--r--  1 root    root     807 Mar 31  2024 .profile
 -rw-r-----  1 bandit3 bandit2   33 Sep 19 07:08 spaces in this filename
+bandit2@bandit:~$
 ```
 
 Yes indeed, there is a 33 byte file called `spaces in this filename` in
@@ -70,6 +71,7 @@ cat: spaces: No such file or directory
 cat: in: No such file or directory
 cat: this: No such file or directory
 cat: filename: No such file or directory
+bandit2@bandit:~$
 ```
 
 Oh no - this command tells `cat` to print four different files named `spaces`,
@@ -80,6 +82,7 @@ One way to _escape_ the spaces is to put the filename in double quotes:
 ```
 bandit2@bandit:~$ cat "spaces in this filename"
 [PASSWORD REMOVED]
+bandit2@bandit:~$
 ```
 
 To confirm that the password is correct, disconnect from the server and then
@@ -114,6 +117,7 @@ it doesn't matter:
 ```
 bandit2@bandit:~$ cat 'spaces in this filename'
 [PASSWORD REMOVED]
+bandit2@bandit:~$
 ```
 
 To escape a single character, a backslash can be used:
@@ -121,6 +125,7 @@ To escape a single character, a backslash can be used:
 ```
 bandit2@bandit:~$ cat spaces\ in\ this\ filename
 [PASSWORD REMOVED]
+bandit2@bandit:~$
 ```
 
 The shell also will do filename expansion using `*` as a wildcard:
@@ -128,6 +133,7 @@ The shell also will do filename expansion using `*` as a wildcard:
 ```
 bandit2@bandit:~$ cat spaces*
 [PASSWORD REMOVED]
+bandit2@bandit:~$
 ```
 
 And finally, the shell autocomplete will solve this problem for us. By entering
@@ -137,4 +143,5 @@ the filename _and_ escapes it:
 ```
 bandit2@bandit:~$ cat spaces\ in\ this\ filename
 [PASSWORD REMOVED]
+bandit2@bandit:~$
 ```
