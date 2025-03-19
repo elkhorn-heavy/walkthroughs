@@ -86,7 +86,7 @@ bandit2@bandit:~$
 ```
 
 To confirm that the password is correct, disconnect from the server and then
-reconnect using the `bandit2` user and the found password (`/etc/issue` and
+reconnect using the `bandit3` user and the found password (`/etc/issue` and
 `/etc/motd` removed):
 
 ```
