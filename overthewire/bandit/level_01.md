@@ -80,7 +80,8 @@ The password you are looking for is: [PASSWORD REMOVED]
 ```
 
 To confirm that the password is correct, disconnect from the server and then
-reconnect using the `bandit1` user and the found password (`/etc/issue` and `/etc/motd` removed):
+reconnect using the `bandit1` user and the found password (`/etc/issue` and
+`/etc/motd` removed):
 
 ```
 bandit0@bandit:~$ exit
@@ -95,7 +96,7 @@ bandit1@bandit:~$
 
 ## Key Takeaways
 
-This challenge is teaching us important unix commands:
+This challenge teaches important unix commands:
 
 - `ls` to list directory contents
 - `cat` to print the contents of a file
