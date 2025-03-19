@@ -18,15 +18,12 @@ server.
 
 ## Initial Analysis
 
-This is a very introductory challenge, with the following provided:
+This challenge provides all the information needed to `ssh` into a server:
 
 - hostname: `bandit.labs.overthewire.org`
 - port: `2220`
 - username: `bandit0`
 - password: `bandit0`
-
-All the information needed to `ssh` into the server is provided, so this will
-probably be straightforward.
 
 ## Understanding the Challenge
 
@@ -36,7 +33,7 @@ completed.
 
 ## Approach Strategy
 
-Log in using `ssh`.
+1. Log in using `ssh`.
 
 ## Step-by-Step Solution
 
