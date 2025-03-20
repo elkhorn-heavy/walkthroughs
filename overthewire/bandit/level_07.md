@@ -85,6 +85,7 @@ find: ‘/proc/2115415/task/2115415/fdinfo/6’: No such file or directory
 find: ‘/proc/2115415/fd/5’: No such file or directory
 find: ‘/proc/2115415/fdinfo/5’: No such file or directory
 find: ‘/home/bandit31-git’: Permission denied
+...SNIP...
 ```
 
 Well that didn't work! The catch is that `|` only pipes `stdout` or "standard
@@ -143,8 +144,8 @@ The `grep` command was introduced for this challenge, but what if it wasn't
 available? One approach would be to send the `stderr` output from the find
 command to `/dev/null`, which is a special file that consumes anything sent to
 it (aka "the bit bucket"). This is done using `2> /dev/null`, which says that
-all output from file descriptor 2 (aka, `stderr`) gets thrown away by sending it
-to `/dev/null`.
+all output from file descriptor 2 (aka, `stderr`) gets sent to `/dev/null`,
+which then throws it away.
 
 ```
 bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c 2> /dev/null
