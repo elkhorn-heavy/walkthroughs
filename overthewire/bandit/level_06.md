@@ -96,11 +96,10 @@ bandit5@bandit:~$
 ```
 
 Well, there's only one file that is 1033 bytes in size. Another attribute of the
-file is that it's not executable, so using `-a` to mean _and_, let's add that to
-the find command to confirm.
+file is that it's not executable, so adding that to the find command to confirm:
 
 ```
-bandit5@bandit:~$ find inhere -size 1033c -a ! -executable
+bandit5@bandit:~$ find inhere -size 1033c ! -executable
 inhere/maybehere07/.file2
 bandit5@bandit:~$
 ```
@@ -177,7 +176,7 @@ or everyone else.
 Similarly, `find` can also be used to display the "long" listing of matches:
 
 ```
-bandit5@bandit:~$ find inhere -size 1033c -a ! -executable -ls
+bandit5@bandit:~$ find inhere -size 1033c ! -executable -ls
    544599      4 -rw-r-----   1 root     bandit5      1033 Sep 19  2024 inhere/maybehere07/.file2
 bandit5@bandit:~$
 ```
@@ -189,7 +188,7 @@ everything that matches the given parameters. The syntax is a little tricky but
 it looks like:
 
 ```
-bandit5@bandit:~$ find inhere -size 1033c -a ! -executable -exec file '{}' \;
+bandit5@bandit:~$ find inhere -size 1033c ! -executable -exec file '{}' \;
 inhere/maybehere07/.file2: ASCII text, with very long lines (1000)
 bandit5@bandit:~$
 ```
