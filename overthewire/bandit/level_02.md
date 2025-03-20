@@ -39,13 +39,7 @@ It appears that the goal is to teach how to view files with strange names.
 ## Step-by-Step Solution
 
 The login information from the previous challenge is used to get a shell as user
-`bandit1`:
-
-```
-bandit1@bandit:~$
-```
-
-To list the files in the directory, the `ls` command is used:
+`bandit1`. To list the files in the directory, the `ls` command is used:
 
 ```
 bandit1@bandit:~$ ls -al

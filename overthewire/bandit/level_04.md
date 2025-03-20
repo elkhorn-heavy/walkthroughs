@@ -39,13 +39,7 @@ It appears that the goal is to teach that it is possible to create so-called
 ## Step-by-Step Solution
 
 The login information from the previous challenge is used to get a shell as user
-`bandit3`:
-
-```
-bandit3@bandit:~$
-```
-
-To list the files in the directory, the `ls` command is used:
+`bandit3`. To list the files in the directory, the `ls` command is used:
 
 ```
 bandit3@bandit:~$ ls

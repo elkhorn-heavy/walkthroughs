@@ -39,13 +39,7 @@ commands in the hints.
 ## Step-by-Step Solution
 
 The login information from the previous challenge is used to get a shell as user
-`bandit4`:
-
-```
-bandit4@bandit:~$
-```
-
-To list the files in the directory, the `ls -al` command is used:
+`bandit4`. To list the files in the directory, the `ls -al` command is used:
 
 ```
 bandit4@bandit:~$ ls -al inhere/
