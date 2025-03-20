@@ -13,9 +13,9 @@ Then use `ssh` to log into the server as the `bandit4` user.
 
 ## Commands Used to Solve This Challenge
 
-- `ssh`: OpenSSH remote login client
-- `ls`: list directory contents
 - `cat`: concatenate files and print on the standard output
+- `ls`: list directory contents
+- `ssh`: OpenSSH remote login client
 
 ## Initial Analysis
 

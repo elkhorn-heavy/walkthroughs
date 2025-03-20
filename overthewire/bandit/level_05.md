@@ -13,10 +13,10 @@ The goal of this challenge is to view the only human-readable file in the
 
 ## Commands Used to Solve This Challenge
 
-- `ssh`: OpenSSH remote login client
-- `ls`: list directory contents
-- `file`: determine file type
 - `cat`: concatenate files and print on the standard output
+- `file`: determine file type
+- `ls`: list directory contents
+- `ssh`: OpenSSH remote login client
 
 ## Initial Analysis
 
