@@ -15,7 +15,7 @@ specific attributes:
 - having the group `bandit6`
 - 33 bytes in size
 
-Then use `ssh` to log into the server as the `bandit6` user.
+Then use `ssh` to log into the server as the `bandit7` user.
 
 ## Commands Used to Solve This Challenge
 
