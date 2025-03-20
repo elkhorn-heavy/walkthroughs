@@ -8,7 +8,7 @@ security skills. From their website:
 
 ## Challenge Overview
 
-The goal of this challenge is to look on the file `data.txt` to find the word
+The goal of this challenge is to look in the file `data.txt` to find the word
 `millionth` - the password will be next to it.
 
 Then use `ssh` to log into the server as the `bandit8` user.

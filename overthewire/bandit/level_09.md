@@ -8,7 +8,7 @@ security skills. From their website:
 
 ## Challenge Overview
 
-The goal of this challenge is to look on the file `data.txt` to find the only
+The goal of this challenge is to look in the file `data.txt` to find the only
 line that occurs one time - this is the password.
 
 Then use `ssh` to log into the server as the `bandit9` user.
