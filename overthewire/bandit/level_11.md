@@ -9,7 +9,7 @@ security skills. From their website:
 ## Challenge Overview
 
 The goal of this challenge is to retrieve the next password from the file
-`data.txt`, which is `base64` encoded text.
+`data.txt`, which is base 64 encoded text.
 
 Then use `ssh` to log into the server as the `bandit11` user.
 
@@ -50,7 +50,8 @@ total 4
 -rw-r----- 1 bandit11 bandit10 69 Sep 19  2024 data.txt
 ```
 
-It's a good idea to take a look at the data:
+It's a good idea to take a look at the data. If it's base 64 encoded then it
+will be printable characters.
 
 ```
 bandit10@bandit:~$ cat data.txt
@@ -59,7 +60,7 @@ bandit10@bandit:~$
 ```
 
 That certainly does look like base 64 encoded data. It consists of only the
-letters `a` to `z`, and `A` to `Z`, the digits `0` to `9`, `+` and `/`, with
+letters `a` to `z` and `A` to `Z`, the digits `0` to `9`, `+`, and `/`, with
 some `=` characters at the end for padding. The `base64` command is used for
 both encoding and decoding, with the `-d` flag used for decoding.
 
@@ -96,7 +97,7 @@ padding at the end, if needed).
 
 `base64` is the clear winner when decoding base 64 data. The `basenc` command
 can also be used to encode and decode base 64 (among other encodings) but that
-might be getting a little ahead of the challenges.
+might be getting a little ahead of this challenge.
 
 ```
 bandit10@bandit:~$ basenc --base64 -d data.txt
