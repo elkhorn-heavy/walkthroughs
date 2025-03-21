@@ -100,7 +100,7 @@ reconnect using the `bandit12` user and the found password (`/etc/issue` and
 bandit11@bandit:~$ exit
 logout
 Connection to bandit.labs.overthewire.org closed.
-$ ssh bandit11@bandit.labs.overthewire.org -p 2220
+$ ssh bandit12@bandit.labs.overthewire.org -p 2220
 [REMOVED: /etc/issue]
 bandit12@bandit.labs.overthewire.org's password:
 [REMOVED: /etc/motd]
