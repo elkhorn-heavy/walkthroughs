@@ -35,8 +35,7 @@ This challenge gives the hint that `xxd` will be needed to revert the hexdump.
 Then `file` will be used to figure out how to undo the multiple compression
 steps.
 
-The information from the previous challenge is used to `ssh` into the
-server.
+The information from the previous challenge is used to `ssh` into the server.
 
 ## Understanding the Challenge
 

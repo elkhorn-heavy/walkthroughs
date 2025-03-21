@@ -25,8 +25,7 @@ Then use `ssh` to log into the server as the `bandit10` user.
 Going to guess that this file has plenty of unreadable data in it. This
 challenge mentions the `strings` command, which will be useful.
 
-The information from the previous challenge is used to `ssh` into the
-server.
+The information from the previous challenge is used to `ssh` into the server.
 
 ## Understanding the Challenge
 

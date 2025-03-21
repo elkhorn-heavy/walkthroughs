@@ -30,8 +30,7 @@ punchline when desired. Since the alphabet has 26 characters, rotating by half
 (13) those characters encodes the plaintext, and rotating another 13 characters
 gets everything back to the plaintext.
 
-The information from the previous challenge is used to `ssh` into the
-server.
+The information from the previous challenge is used to `ssh` into the server.
 
 ## Understanding the Challenge
 

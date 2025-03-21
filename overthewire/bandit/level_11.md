@@ -25,8 +25,7 @@ Then use `ssh` to log into the server as the `bandit11` user.
 This sounds like it's going to be an easy introduction to using the `base64`
 command.
 
-The information from the previous challenge is used to `ssh` into the
-server.
+The information from the previous challenge is used to `ssh` into the server.
 
 ## Understanding the Challenge
 

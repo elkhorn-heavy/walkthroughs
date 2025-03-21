@@ -24,8 +24,7 @@ Then use `ssh` to log into the server as the `bandit8` user.
 Going to guess that this is a very large file. This challenge also introduces a
 bunch of new commands, some of which might be useful.
 
-The information from the previous challenge is used to `ssh` into the
-server.
+The information from the previous challenge is used to `ssh` into the server.
 
 ## Understanding the Challenge
 

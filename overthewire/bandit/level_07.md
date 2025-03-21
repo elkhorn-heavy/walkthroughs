@@ -30,8 +30,7 @@ This would be very hard to do by scanning the thousands of files that are on the
 server. The `find` tool used in the previous challenge will be useful. The
 description also introduces `grep` as a new command.
 
-The information from the previous challenge is used to `ssh` into the
-server.
+The information from the previous challenge is used to `ssh` into the server.
 
 ## Understanding the Challenge
 

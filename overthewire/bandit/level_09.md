@@ -25,8 +25,7 @@ Then use `ssh` to log into the server as the `bandit9` user.
 Going to guess that this is a large file and has plenty of duplicate lines. This
 challenge mentions the `sort` and `uniq` commands, which will be useful.
 
-The information from the previous challenge is used to `ssh` into the
-server.
+The information from the previous challenge is used to `ssh` into the server.
 
 ## Understanding the Challenge
 
