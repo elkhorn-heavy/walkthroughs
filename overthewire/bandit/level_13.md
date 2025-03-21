@@ -12,7 +12,7 @@ The goal of this challenge is to retrieve the next password from the file
 `data.txt`. This file is a hexdump, and the actual file itself has been
 compressed multiple times.
 
-Then use `ssh` to log into the server as the `bandit12` user.
+Then use `ssh` to log into the server as the `bandit13` user.
 
 ## Commands Used to Solve This Challenge
 
