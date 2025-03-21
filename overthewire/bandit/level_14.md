@@ -68,7 +68,7 @@ also be used.
 
 ```
 bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
-[PASSWORD REMOVED]
+[REMOVED: BANDIT14 PASSWORD]
 bandit14@bandit:~$
 ```
 

@@ -75,7 +75,7 @@ One way to _escape_ the spaces is to put the filename in double quotes:
 
 ```
 bandit2@bandit:~$ cat "spaces in this filename"
-[PASSWORD REMOVED]
+[REMOVED: BANDIT3 PASSWORD]
 bandit2@bandit:~$
 ```
 
@@ -110,7 +110,7 @@ it doesn't matter:
 
 ```
 bandit2@bandit:~$ cat 'spaces in this filename'
-[PASSWORD REMOVED]
+[REMOVED: BANDIT3 PASSWORD]
 bandit2@bandit:~$
 ```
 
@@ -118,7 +118,7 @@ To escape a single character, a backslash can be used:
 
 ```
 bandit2@bandit:~$ cat spaces\ in\ this\ filename
-[PASSWORD REMOVED]
+[REMOVED: BANDIT3 PASSWORD]
 bandit2@bandit:~$
 ```
 
@@ -126,7 +126,7 @@ The shell also will do filename expansion using `*` as a wildcard:
 
 ```
 bandit2@bandit:~$ cat spaces*
-[PASSWORD REMOVED]
+[REMOVED: BANDIT3 PASSWORD]
 bandit2@bandit:~$
 ```
 
@@ -136,6 +136,6 @@ the filename _and_ escapes it:
 
 ```
 bandit2@bandit:~$ cat spaces\ in\ this\ filename
-[PASSWORD REMOVED]
+[REMOVED: BANDIT3 PASSWORD]
 bandit2@bandit:~$
 ```

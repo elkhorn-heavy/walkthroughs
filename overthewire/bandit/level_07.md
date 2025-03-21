@@ -110,7 +110,7 @@ be piped into another `grep` command:
 bandit6@bandit$ find / -user bandit7 -group bandit6 -size 33c |& grep -v "Permission denied" | grep -v "No such file or directory"
 /var/lib/dpkg/info/bandit7.password
 bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
-[PASSWORD REMOVED]
+[REMOVED: BANDIT7 PASSWORD]
 bandit6@bandit:~$
 ```
 

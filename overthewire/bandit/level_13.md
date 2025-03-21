@@ -243,7 +243,7 @@ bandit12@bandit:/tmp/tmp.MFlKmHZ1qU$ gunzip data8.gz
 bandit12@bandit:/tmp/tmp.MFlKmHZ1qU$ file data8
 data8: ASCII text
 bandit12@bandit:/tmp/tmp.MFlKmHZ1qU$ cat data8
-The password is [PASSWORD REMOVED]
+The password is [REMOVED: BANDIT13 PASSWORD]
 bandit12@bandit:/tmp/tmp.MFlKmHZ1qU$
 ```
 

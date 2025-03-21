@@ -65,7 +65,7 @@ both encoding and decoding, with the `-d` flag used for decoding.
 
 ```
 bandit10@bandit:~$ base64 -d data.txt
-The password is [PASSWORD REMOVED]
+The password is [REMOVED: BANDIT11 PASSWORD]
 bandit10@bandit:~$
 ```
 
@@ -100,6 +100,6 @@ might be getting a little ahead of this challenge.
 
 ```
 bandit10@bandit:~$ basenc --base64 -d data.txt
-The password is [PASSWORD REMOVED]
+The password is [REMOVED: BANDIT11 PASSWORD]
 bandit10@bandit:~$
 ```

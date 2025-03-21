@@ -77,7 +77,7 @@ saying `-`.
 
 ```
 bandit1@bandit:~$ cat ./-
-[PASSWORD REMOVED]
+[REMOVED: BANDIT2 PASSWORD]
 bandit1@bandit:~$
 ```
 
@@ -112,7 +112,7 @@ for the current directory:
 
 ```
 bandit1@bandit:~$ cat ~/-
-[PASSWORD REMOVED]
+[REMOVED: BANDIT2 PASSWORD]
 bandit1@bandit:~$
 ```
 
@@ -120,6 +120,6 @@ Similarly, the full path to the file could be used:
 
 ```
 bandit1@bandit:~$ cat /home/bandit1/-
-[PASSWORD REMOVED]
+[REMOVED: BANDIT2 PASSWORD]
 bandit1@bandit:~$
 ```

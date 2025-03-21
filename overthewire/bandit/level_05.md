@@ -81,7 +81,7 @@ One of these things is not like the others. Now to `cat` the file:
 
 ```
 bandit4@bandit:~$ cat inhere/-file07
-[PASSWORD REMOVED]
+[REMOVED: BANDIT5 PASSWORD]
 bandit4@bandit:~$
 ```
 

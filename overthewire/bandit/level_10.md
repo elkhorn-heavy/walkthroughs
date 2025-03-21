@@ -76,7 +76,7 @@ bandit9@bandit:~$ strings data.txt | grep ===
 }========== the
 3JprD========== passwordi
 ~fDV3========== is
-D9========== [PASSWORD REMOVED]
+D9========== [REMOVED: BANDIT10 PASSWORD]
 ```
 
 The final line here contains the password.
@@ -113,6 +113,6 @@ least 32 characters:
 
 ```
 bandit9@bandit:~$ strings -32 data.txt
-D9========== [PASSWORD REMOVED]
+D9========== [REMOVED: BANDIT10 PASSWORD]
 bandit9@bandit:~$
 ```

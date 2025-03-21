@@ -79,7 +79,7 @@ one command could be:
 
 ```
 bandit11@bandit:~$ cat data.txt | tr abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM
-The password is [PASSWORD REMOVED]
+The password is [REMOVED: BANDIT12 PASSWORD]
 bandit11@bandit:~$
 ```
 
@@ -88,7 +88,7 @@ That's quite the command to type out. Thankfully `tr` allows shortcuts, so that
 
 ```
 bandit11@bandit:~$ cat data.txt | tr a-zA-Z n-za-mN-ZA-M
-The password is [PASSWORD REMOVED]
+The password is [REMOVED: BANDIT12 PASSWORD]
 bandit11@bandit:~$
 ```
 

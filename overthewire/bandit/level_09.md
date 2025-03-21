@@ -92,7 +92,7 @@ flag to only print unique lines:
 
 ```
 bandit8@bandit:~$ sort data.txt | uniq -u
-[PASSWORD REMOVED]
+[REMOVED: BANDIT9 PASSWORD]
 bandit8@bandit:~$
 ```
 
@@ -141,6 +141,6 @@ Now `grep` for the one with a single occurrence:
 
 ```
 bandit8@bandit:~$ sort data.txt | uniq -c | grep " 1 "
-      1 [PASSWORD REMOVED]
+      1 [REMOVED: BANDIT9 PASSWORD]
 bandit8@bandit:~$
 ```

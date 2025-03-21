@@ -86,7 +86,7 @@ Now a simple `cat` will display the password:
 
 ```
 bandit3@bandit:~$ cat inhere/...Hiding-From-You
-[PASSWORD REMOVED]
+[REMOVED: BANDIT4 PASSWORD]
 bandit3@bandit:~$
 ```
 
@@ -121,5 +121,5 @@ autocompletes the filename:
 
 ```
 bandit3@bandit:~$ cat inhere/...Hiding-From-You
-[PASSWORD REMOVED]
+[REMOVED: BANDIT4 PASSWORD]
 ```

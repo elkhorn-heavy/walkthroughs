@@ -45,9 +45,9 @@ bandit14@bandit:~$ telnet localhost 30000
 Trying 127.0.0.1...
 Connected to localhost.
 Escape character is '^]'.
-[PASSWORD REMOVED]
+[REMOVED: BANDIT14 PASSWORD]
 Correct!
-[PASSWORD REMOVED]
+[REMOVED: BANDIT15 PASSWORD]
 
 Connection closed by foreign host.
 bandit14@bandit:~$
@@ -85,9 +85,9 @@ used instead of `telnet`?
 
 ```
 bandit14@bandit:~$ nc localhost 30000
-[PASSWORD REMOVED]
+[REMOVED: BANDIT14 PASSWORD]
 Correct!
-[PASSWORD REMOVED]
+[REMOVED: BANDIT15 PASSWORD]
 
 ^C
 bandit14@bandit:~$

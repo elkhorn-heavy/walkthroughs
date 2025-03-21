@@ -64,7 +64,7 @@ is helpful here:
 
 ```
 bandit7@bandit:~$ grep millionth data.txt
-millionth	[PASSWORD REMOVED]
+millionth	[REMOVED: BANDIT8 PASSWORD]
 bandit7@bandit:~$
 ```
 
@@ -116,7 +116,7 @@ complex tool to use.
 
 ```
 bandit7@bandit:~$ awk /millionth/ data.txt
-millionth	[PASSWORD REMOVED]
+millionth	[REMOVED: BANDIT8 PASSWORD]
 bandit7@bandit:~$
 ```
 
