@@ -56,8 +56,7 @@ total 4
 bandit11@bandit:~$
 ```
 
-It's a good idea to take a look at the data. If it's base 64 encoded then it
-will be printable characters.
+It's a good idea to take a look at the data.
 
 ```
 bandit11@bandit:~$ cat data.txt
@@ -67,7 +66,7 @@ bandit11@bandit:~$
 
 Spaces are not encoded, so the plaintext here will be four separate words and
 the first three are easy to guess. Since we know it's ROT13 encoded, we don't
-have to think too hard.
+have to think too hard, though.
 
 The `tr` command translates one set of characters into another set. For example,
 to translate all `a` and `b` characters to `A` and `B`, the command is
