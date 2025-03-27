@@ -8,7 +8,7 @@ security skills. From their website:
 
 ## Challenge Overview
 
-The goal of this challenge get the password out of the `readme` file. The
+The goal of this challenge is to get the password out of the `readme` file. The
 difficulty is that the `.bashrc` file automatically logs out the user when they
 log in.
 
