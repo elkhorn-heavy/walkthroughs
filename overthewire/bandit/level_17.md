@@ -165,7 +165,7 @@ three, and is producing an error. The first column shows that these are all IPv6
 ports. The `-6` flag for `netstat` limits results to IPv6 ports:
 
 ```
-andit16@bandit:~$ netstat -lt6 | grep :31
+bandit16@bandit:~$ netstat -lt6 | grep :31
 tcp6       0      0 [::]:31960              [::]:*                  LISTEN
 tcp6       0      0 [::]:31691              [::]:*                  LISTEN
 tcp6       0      0 [::]:31046              [::]:*                  LISTEN
