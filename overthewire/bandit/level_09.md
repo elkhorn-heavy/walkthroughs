@@ -47,6 +47,7 @@ The login information from the previous challenge is used to get a shell as user
 bandit8@bandit:~$ ls -l
 total 36
 -rw-r----- 1 bandit9 bandit8 33033 Sep 19 07:08 data.txt
+bandit8@bandit:~$
 ```
 
 This file is only 33033 bytes long, so how hard can it be to just visually
