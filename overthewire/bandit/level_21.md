@@ -14,7 +14,7 @@ received the password for `bandit20` it will return the password for `bandit21`.
 There is a hint to try connecting to our own network daemon, so maybe this is
 the solution.
 
-Then use `ssh` to log into the server as the `bandit20` user.
+Then use `ssh` to log into the server as the `bandit21` user.
 
 ## Commands Used to Solve This Challenge
 

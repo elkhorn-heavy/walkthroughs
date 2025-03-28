@@ -11,7 +11,7 @@ security skills. From their website:
 The goal of this challenge is to find a process that is being run by the
 `cron` daemon.
 
-Then use `ssh` to log into the server as the `bandit21` user.
+Then use `ssh` to log into the server as the `bandit22` user.
 
 ## Commands Used to Solve This Challenge
 
