@@ -1,4 +1,4 @@
-# OverTheWire - Bandit - Level 19
+# OverTheWire - Bandit - Level 20
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
