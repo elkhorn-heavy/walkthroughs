@@ -24,7 +24,7 @@ Then use `ssh` to log into the server as the `bandit23` user.
 ## Initial Analysis
 
 This is similar to the last challenge and comes as no surprise after seeing the
-contents of `/etc/cron.d`
+contents of `/etc/cron.d`.
 
 The information from the previous challenge is used to `ssh` into the server.
 
