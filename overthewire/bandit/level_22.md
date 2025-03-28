@@ -87,6 +87,7 @@ guess name in `/tmp`. Since the filename is known, there is no need to guess:
 ```
 bandit21@bandit:~$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 [REMOVED: BANDIT22 PASSWORD]
+bandit21@bandit:~$
 ```
 
 To confirm that the password is correct, disconnect from the server and then
