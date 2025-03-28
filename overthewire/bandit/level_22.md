@@ -68,7 +68,8 @@ So this says that when the cron job runs, it runs the command
 `/usr/bin/cronjob_bandit22.sh`. The `@reboot` means that the job is run when
 the server is rebooted. The `* * * * *` means that the job runs every minute, of
 every hour, of every day of the month, of every month of the year, and every
-day of the week.
+day of the week. Where it says `bandit22` is the user that the cron job is to
+run as.
 
 The next step is to see what the command actually does:
 
