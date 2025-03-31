@@ -183,9 +183,8 @@ bandit5@bandit:~$
 
 ### Using `find` to Run `file`
 
-Another tactic would have been to have the `find` command run `file` on
-everything that matches the given parameters. The syntax is a little tricky but
-it looks like:
+Another tactic is for the `find` command to run `file` on everything matching
+the parameters. The syntax is a little tricky but it looks like:
 
 ```
 bandit5@bandit:~$ find inhere -size 1033c ! -executable -exec file '{}' \;
