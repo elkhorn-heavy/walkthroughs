@@ -33,7 +33,7 @@ completed.
 
 ## Approach Strategy
 
-1. Log in using `ssh`.
+1. Log in using `ssh`
 
 ## Step-by-Step Solution
 
@@ -57,10 +57,10 @@ $ ssh username@hostname -p port
 What about the password? Reading the man page, `ssh` doesn't seem to have a way
 to specify the password on the commmand line. This is common to most unix
 commands, because secret information should never be passed as a command line
-argument. The reason for this is that on a multiuser system the `ps` command can
-be used to see the commands running in the system - any password would be
+argument. The reason is that on multiuser systems the `ps` command will show all
+the commands running in the system - any password on the command line would be
 visible to other users!
-
+S
 So using the login information provided by the challenge, the command to run is:
 
 ```
@@ -79,7 +79,7 @@ that something strange is going on.
 
 Since this is the first time connecting to this server, `yes` is entered. This
 will cause `ssh` to remember this server so that the next time a connection is
-made thr warning will not appear.
+made the warning will not appear.
 
 Carrying on:
 
@@ -194,8 +194,8 @@ bandit0@bandit:~$
 ```
 
 That's a lot of text! This is called the _message of the day_ (`/etc/motd`) and
-is displayed on login. The last line, finally, is the shell prompt. The format
-of the prompt is:
+is displayed on login. The last line, finally, is the shell prompt, also called
+the command line prompt. The format of the prompt is:
 
 ```
 username@hostname:current_directory$
