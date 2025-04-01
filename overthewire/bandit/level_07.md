@@ -157,3 +157,7 @@ bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c 2> /dev/null
 /var/lib/dpkg/info/bandit7.password
 bandit6@bandit:~$
 ```
+
+Note that this is subtly different from the `grep` solution. This solution
+discards _all_ of the `find` error messages. The `grep` solution only discards
+those that are known to not be relevant.
