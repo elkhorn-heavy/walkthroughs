@@ -21,14 +21,14 @@ Then use `ssh` to log into the server as the `bandit8` user.
 
 ## Initial Analysis
 
-Going to guess that this is a very large file. This challenge also introduces a
-bunch of new commands, some of which might be useful.
+Going to guess that this is a very large file, something that is too big to read
+through looking for the word "millionth".
 
 The information from the previous challenge is used to `ssh` into the server.
 
 ## Understanding the Challenge
 
-It appears that the goal is to use new commands to search the file.
+It appears that the goal is to use `grep` to search the file.
 
 ## Approach Strategy
 
@@ -139,4 +139,5 @@ Aaron	U4cr1d0o8h8V3GyzObNOa8aMbm6GvI3B
 ...SNIP...
 ```
 
-It would still be tedious to scroll through this.
+It would still be tedious to scroll through this, but easier than looking at
+every line.
