@@ -8,12 +8,13 @@ security skills. From their website:
 
 ## Challenge Overview
 
-The goal of this challenge is to look in the `inhere` directory and find a file
-with very specific attributes:
+The goal of this challenge is to find a file that has very specific attributes:
 
 - human-readable
 - 1033 bytes in size
 - not executable
+
+This file will be found in the `inhere` directory.
 
 Then use `ssh` to log into the server as the `bandit6` user.
 

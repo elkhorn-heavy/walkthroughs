@@ -8,12 +8,13 @@ security skills. From their website:
 
 ## Challenge Overview
 
-The goal of this challenge is to look on the server to find a file with very
-specific attributes:
+The goal of this challenge is to find a file that has very specific attributes:
 
 - owned by user `bandit7`
 - having the group `bandit6`
 - 33 bytes in size
+
+This file could be anywhere on the server, so under the root (`/`) directory.
 
 Then use `ssh` to log into the server as the `bandit7` user.
 
