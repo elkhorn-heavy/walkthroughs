@@ -67,11 +67,11 @@ find: ‘/home/bandit31-git’: Permission denied
 Over 100 lines have been snipped off the bottom of the output of this command,
 as there are many directories and files that this user cannot access.
 
-Good thing this challenge includes the new command `grep`. This command takes
-lines of input and selects those that contain a given string. Similarly, it has
-a `-v` flag used to remove lines of input that contain a given string. With
-shell commands the `|` or "pipe" operator is used to send the output of one
-command to the input of another:
+Good thing this challenge includes the new command `grep`. By default this
+command takes lines of input and selects those that contain a given string.
+Similarly, it has a `-v` flag used to remove lines of input that contain a given
+string. With shell commands the `|` or "pipe" operator is used to send the
+output of one command to the input of another:
 
 ```
 bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c | grep -v "Permission denied"
@@ -91,7 +91,8 @@ find: ‘/home/bandit31-git’: Permission denied
 Well that didn't work! The catch is that `|` only pipes `stdout` or "standard
 output" to the next command. If the first command is writing error messages to
 `stderr` or "standard error", then those lines are not passed through the pipe.
-The fix is to use `|&`, which will send all `stderr` lines to `stdout`:
+The fix is to use `|&`, which will additionally send all `stderr` lines to
+`stdout`:
 
 ```
 bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c |& grep -v "Permission denied"
@@ -104,8 +105,8 @@ bandit6@bandit:~$
 ```
 
 Pretty good! There's the path to the file as the last line. However, there are
-still some error lines in the output. To remove these, the output of `grep` can
-be piped into another `grep` command:
+still some error lines in the output. For the sake of completeness, the output
+of `grep` can be piped into another `grep` command to remove all errors:
 
 ```
 bandit6@bandit$ find / -user bandit7 -group bandit6 -size 33c |& grep -v "Permission denied" | grep -v "No such file or directory"
@@ -114,6 +115,10 @@ bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
 [REMOVED: BANDIT7 PASSWORD]
 bandit6@bandit:~$
 ```
+
+Note that only `|` is needed for the second pipe, as `stderr` lines are already
+put into `stdout` by the previous `|&`. Note that it wouldn't be incorrect to
+use `|&` for the second pipe - it just isn't strictly necessary.
 
 To confirm that the password is correct, disconnect from the server and then
 reconnect using the `bandit7` user and the found password (`/etc/issue` and
