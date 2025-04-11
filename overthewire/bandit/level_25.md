@@ -13,12 +13,14 @@ password plus a four digit PIN, and if both are correct then the `bandit25`
 password is returned. The hints are that it needs to be brute forced, and that a
 new connection is not needed for each guess.
 
-Then use `ssh` to log into the server as the `bandit24` user.
+Then use `ssh` to log into the server as the `bandit25` user.
 
 ## Commands Used to Solve This Challenge
 
 - `cat`: concatenate files and print on the standard output
 - `ls`: list directory contents
+- `nc`: arbitrary TCP and UDP connections and listens
+- `socat`: Multipurpose relay (SOcket CAT)
 - `ssh`: OpenSSH remote login client
 
 ## Initial Analysis
@@ -45,7 +47,7 @@ often an option.
 ## Step-by-Step Solution
 
 The login information from the previous challenge is used to get a shell as user
-`bandit23`. Using `nc` to connect to port 30002 gives:
+`bandit24`. Using `nc` to connect to port 30002 gives:
 
 ```
 bandit24@bandit:~$ nc localhost 30002
