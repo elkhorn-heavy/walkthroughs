@@ -149,7 +149,7 @@ Date:   Thu Apr 10 14:23:21 2025 +0000
 bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$
 ```
 
-This repository has three commits, with the most recent one at the top. The top
+This repository has two commits, with the most recent one at the top. The top
 commit message says that the username is fixed, but no mention of the password.
 That isn't too surprising, as this challenge won't have the same solution as the
 previous challenge.
@@ -167,106 +167,39 @@ bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ git branch -a
 bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$
 ```
 
-So the current `HEAD` branch being worked on is also called `master` (more
-modern repositories call the main branch `main`). There are also `dev` and
-`sploits-dev` branches. The `sploits-dev` branch looks like the more interesting
-of the two. That branch can be checked out:
+So the current `HEAD` branch in our filesystem is also called `master` (more
+modern repositories call the default branch `main`). There are also `dev` and
+`sploits-dev` branches.
+
+The `git` command can provide a difference between the current branch and one of
+these named branches. The output can be huge, but hopefully for this sample
+repository it is manageable:
 
 ```
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ git checkout remotes/origin/sploits-dev
-Note: switching to 'remotes/origin/sploits-dev'.
+bandit29@bandit:/tmp/tmp.Vg7mKsQ7HT/repo$ git diff remotes/origin/dev
+diff --git a/README.md b/README.md
+index bc6ad3d..1af21d3 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for bandit30 of bandit.
+ ## credentials
 
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by switching back to a branch.
+ - username: bandit30
+-- password: [REMOVED: BANDIT30 PASSWORD]
++- password: <no passwords in production!>
 
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -c with the switch command. Example:
-
-  git switch -c <new-branch-name>
-
-Or undo this operation with:
-
-  git switch -
-
-Turn off this advice by setting config variable advice.detachedHead to false
-
-HEAD is now at c2e20a2 add some silly exploit, just for shit and giggles
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$
+diff --git a/code/gif2ascii.py b/code/gif2ascii.py
+deleted file mode 100644
+index 8b13789..0000000
+--- a/code/gif2ascii.py
++++ /dev/null
+@@ -1 +0,0 @@
+-
+bandit29@bandit:/tmp/tmp.Vg7mKsQ7HT/repo$
 ```
 
-Curious what is meant by that last comment:
-
-```
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ ls -al
-total 20
-drwxrwxr-x 4 bandit29 bandit29 4096 Apr 11 18:12 .
-drwx------ 3 bandit29 bandit29 4096 Apr 11 18:03 ..
-drwxrwxr-x 2 bandit29 bandit29 4096 Apr 11 18:12 exploits
-drwxrwxr-x 8 bandit29 bandit29 4096 Apr 11 18:12 .git
--rw-rw-r-- 1 bandit29 bandit29  131 Apr 11 18:03 README.md
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ ls -al exploits
-total 12
-drwxrwxr-x 2 bandit29 bandit29 4096 Apr 11 18:12 .
-drwxrwxr-x 4 bandit29 bandit29 4096 Apr 11 18:12 ..
--rw-rw-r-- 1 bandit29 bandit29    1 Apr 11 18:12 horde5.md
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$
-```
-
-Hmm - so this branch has added an `exploits` directory, and that directory
-contains a file called `horde5.md`. However, that file is only `1` byte long
-so it isn't going to be of use.
-
-Maybe it's the `README.md` file again?
-
-```
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ cat README.md
-# Bandit Notes
-Some notes for bandit30 of bandit.
-
-## credentials
-
-- username: bandit30
-- password: <no passwords in production!>
-
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$
-```
-
-No luck. So maybe it is the `dev` branch after all:
-
-```
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ git checkout remotes/origin/dev
-Previous HEAD position was c2e20a2 add some silly exploit, just for shit and giggles
-HEAD is now at a97d0db add data needed for development
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ ls -al
-total 20
-drwxrwxr-x 4 bandit29 bandit29 4096 Apr 11 18:17 .
-drwx------ 3 bandit29 bandit29 4096 Apr 11 18:03 ..
-drwxrwxr-x 2 bandit29 bandit29 4096 Apr 11 18:17 code
-drwxrwxr-x 8 bandit29 bandit29 4096 Apr 11 18:17 .git
--rw-rw-r-- 1 bandit29 bandit29  134 Apr 11 18:17 README.md
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ ls -al code
-total 12
-drwxrwxr-x 2 bandit29 bandit29 4096 Apr 11 18:17 .
-drwxrwxr-x 4 bandit29 bandit29 4096 Apr 11 18:17 ..
--rw-rw-r-- 1 bandit29 bandit29    1 Apr 11 18:17 gif2ascii.py
-```
-
-Now there is a new `code` directory, and it contains a file `gif2ascii.py`. Once
-again, though, the new file is only `1` byte long. Check the `README.md` again:
-
-```
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$ cat README.md
-# Bandit Notes
-Some notes for bandit30 of bandit.
-
-## credentials
-
-- username: bandit30
-- password: [REMOVED: BANDIT30 PASSWORD]
-
-bandit29@bandit:/tmp/tmp.ABrQILio6o/repo$
-```
+There it is, about halfway through the output: in the `README.md` file the
+"password" line was changed in the `dev` branch to include the actual password.
 
 To confirm that the password is correct, disconnect from the server and then
 reconnect using the `bandit30` user and the found password (`/etc/issue` and
@@ -285,11 +218,48 @@ bandit30@bandit:~$
 
 ## Key Takeaways
 
-This challenge continues to teach about `git` repositories. The `git`
-repositories can contain multiple named branches that differ from the main
-branch. These branches may contain sensitive information.
+This challenge continues to teach about `git` repositories, which can contain
+named branches that differ from the default branch. These branches may contain
+sensitive information.
 
 ## Beyond the Flag
 
-This is a straightforward clone and examination of a `git` respository, and then
-a more complicated job of searching through the branches.
+It's good practice to solve things in different ways. What are some other ways
+to solve this challenge?
+
+This is a straightforward clone and examination of a `git` repository, with the
+difficulty of the password being in one of the named branches. If there is a lot
+of information in a branch, the `git diff` command output can be overwhelming.
+It might be easier to check out the branch and examine it manually:
+
+```
+bandit29@bandit:/tmp/tmp.Vg7mKsQ7HT/repo$ git checkout remotes/origin/dev
+Note: switching to 'remotes/origin/dev'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at a97d0db add data needed for development
+bandit29@bandit:/tmp/tmp.Vg7mKsQ7HT/repo$ cat README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: [REMOVED: BANDIT30 PASSWORD]
+
+bandit29@bandit:/tmp/tmp.Vg7mKsQ7HT/repo$
+```
