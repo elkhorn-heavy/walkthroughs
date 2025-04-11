@@ -36,7 +36,7 @@ up the complicated exploit in the previous level.
 1. Make the screen small to cause `more` to page the output
 1. Log in using `ssh`
 1. Escape from `more` into `vi`
-1. Escepe from `vi` into a shell
+1. Escape from `vi` into a shell
 1. Figure out how to get the `bandit27` password
 
 ## Step-by-Step Solution
