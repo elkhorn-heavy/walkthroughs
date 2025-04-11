@@ -162,7 +162,8 @@ it's back to being `bandit25`. How to stay as `bandit26`?
 
 Pressing the `v` key will open up `vi` to edit the file. Once in the editor, the
 trick to opening a shell is to change the shell to something else with
-`:set shell=/bin/bash`, followed by `:shell`, which gives:
+`:set shell=/bin/bash`, followed by `:shell`, which gives a shell and the
+password is retrieved:
 
 ```
 bandit26@bandit:~$ cat /etc/bandit_pass/bandit26
