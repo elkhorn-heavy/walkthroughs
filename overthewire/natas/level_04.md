@@ -53,7 +53,7 @@ administrator of a web site can control the robots using the `/robots.txt` file:
 
 ![The Robots file](images/level_04/03_robots_txt.png)
 
-This file says that the secret directory `/s3cr3t` should not be indexed. That
+This file says that the secret directory `/s3cr3t/` should not be indexed. That
 directory probably contains interesting things:
 
 ![The Secret Directory](images/level_04/04_secret.png)
