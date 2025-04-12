@@ -16,7 +16,7 @@ provided:
 
 This displays the following web page:
 
-![The main page](00_main_page.png)
+![The main page](images/level_00/00_main_page.png)
 
 ## Initial Analysis
 

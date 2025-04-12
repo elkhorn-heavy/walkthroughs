@@ -10,7 +10,7 @@ security skills. From their website:
 After discovering the `natas1` password in the previous challenge, it can be
 used to log into http://natas1.natas.labs.overthewire.org:
 
-![The main page](00_main_page.png)
+![The main page](images/level_02/00_main_page.png)
 
 ## Initial Analysis
 
@@ -32,7 +32,7 @@ Browsers have "Developer Tools" that can be used to look at the source for a web
 page. These tools are also called the "F12 Tools" as the `F12` key is used to
 run them. Note that the password has been redacted in this image:
 
-![Developer Tools (password redacted)](01_developer_tools.png)
+![Developer Tools (password redacted)](images/level_02/01_developer_tools.png)
 
 ## Key Takeaways
 

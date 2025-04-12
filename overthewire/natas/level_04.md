@@ -10,7 +10,7 @@ security skills. From their website:
 After discovering the `natas3` password in the previous challenge, it can be
 used to log into http://natas3.natas.labs.overthewire.org:
 
-![The main page](00_main_page.png)
+![The main page](images/level_03/00_main_page.png)
 
 ## Initial Analysis
 
@@ -31,13 +31,13 @@ Browsers provide a way to look at the "source code" of a web page. For example
 in Firefox, right-clicking on a page brings up a context menu that includes an
 item to "View Page Source":
 
-![The Firefox Context Menu](01_context_menu.png)
+![The Firefox Context Menu](images/level_04/01_context_menu.png)
 
 The page source is the HTML that makes up the page. The current `natas3`
 password for "WeChall" has been redacted in this image, but that's not the
 password that is needed:
 
-![The Page Source](02_view_source.png)
+![The Page Source](images/level_04/02_view_source.png)
 
 The comment at the top in green says that the header information can be ignored.
 That's nice of the challenge developer to make this a little easier.
@@ -51,17 +51,17 @@ This is a nice hint! Search engines use "web crawlers", or "spiders", or
 front page of the website and then following every link that exists. The
 administrator of a web site can control the robots using the `/robots.txt` file:
 
-![The Robots file](03_robots_txt.png)
+![The Robots file](images/level_04/03_robots_txt.png)
 
-This file says the the secret directory `/s3cr3t` should not be indexed. That
+This file says that the secret directory `/s3cr3t` should not be indexed. That
 directory probably contains interesting things:
 
-![The Secret Directory](04_secret.png)
+![The Secret Directory](images/level_04/04_secret.png)
 
-Clicking on the `users.txt` link will display the file. It contains pairs of
-usernames and passwords, including the `natas4` user (password redacted):
+Clicking on the `users.txt` link will display the file. It contains the username
+and password for the `natas4` user (password redacted):
 
-![The users.txt file](05_users_file.png)
+![The users.txt file](images/level_04/05_users_file.png)
 
 ## Key Takeaways
 
