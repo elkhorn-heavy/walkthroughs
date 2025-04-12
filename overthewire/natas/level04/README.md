@@ -33,34 +33,39 @@ item to "View Page Source":
 
 ![The Firefox Context Menu](01_context_menu.png)
 
-The page source is the HTML that makes up the page. In this first challenge the
-password is very obvious, as it is stored in a comment in the HTML. Note that
-the `natas2` password has been redacted in this image:
+The page source is the HTML that makes up the page. The current `natas3`
+password for "WeChall" has been redacted in this image, but that's not the
+password that is needed:
 
 ![The Page Source](02_view_source.png)
 
-Note the comment at the top in green that says that the header information can
-be ignored. That's nice of the challenge developer to make this a little easier.
-The page also includes an `<img>` tag at the bottom:
+The comment at the top in green says that the header information can be ignored.
+That's nice of the challenge developer to make this a little easier.
 
-![The Page Source Image](02_view_source_img.png)
+The page has another comment at the bottom saying
 
-The image on the page doesn't appear to be of interest. However, it is in a
-directory called `files`. Perhaps there is something else in that directory.
-Appending `/files` to the original web page url results in
-http://natas2.natas.labs.overthewire.org/files, which provides a nice list of
-what is in the directory, including something called `users.txt`:
+> No more information leaks!! Not even Google will find it this time...
 
-![The /files Directory](03_files_directory.png)
+This is a nice hint! Search engines use "web crawlers", or "spiders", or
+"robots" to index all the content on a website. This is done by loading the
+front page of the website and then following every link that exists. The
+administrator of a web site can control the robots using the `/robots.txt` file:
+
+![The Robots file](03_robots_txt.png)
+
+This file says the the secret directory `/s3cr3t` should not be indexed. That
+directory probably contains interesting things:
+
+![The Secret Directory](04_secret.png)
 
 Clicking on the `users.txt` link will display the file. It contains pairs of
-usernames and passwords, including the `natas3` user (password redacted):
+usernames and passwords, including the `natas4` user (password redacted):
 
-![The users.txt file](04_users_file.png)
+![The users.txt file](05_users_file.png)
 
 ## Key Takeaways
 
-- Reading the source code of a web page can uncover directories of interest
+- Reading the `robots.txt` file can uncover items of interest
 - Misconfigured web servers can provide directory listings and/or sensitive
   files
 
@@ -69,5 +74,5 @@ usernames and passwords, including the `natas3` user (password redacted):
 It's always a good idea to think about other solutions. In this challenge some
 options are:
 
-1. Instead of using the View Page Source, the Developer Tools would have
-   uncovered the same directory
+- Instead of using the View Page Source, the Developer Tools would have
+  uncovered the comment, again leading to the `robots.txt` file
