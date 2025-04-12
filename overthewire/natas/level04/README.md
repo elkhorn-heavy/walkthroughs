@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 3
+# OverTheWire - Natas - Level 4
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
@@ -7,8 +7,8 @@ security skills. From their website:
 
 ## Challenge Overview
 
-After discovering the `natas2` password in the previous challenge, it can be
-used to log into http://natas2.natas.labs.overthewire.org:
+After discovering the `natas3` password in the previous challenge, it can be
+used to log into http://natas3.natas.labs.overthewire.org:
 
 ![The main page](00_main_page.png)
 
@@ -18,7 +18,8 @@ The web page instructions are:
 
 > There is nothing on this page
 
-Very interesting, but there must be _something_ somewhere.
+This is the same message as the previous challenge, but the assumption is that
+there must be _something_ somewhere else.
 
 ## Approach Strategy
 
@@ -32,13 +33,14 @@ item to "View Page Source":
 
 ![The Firefox Context Menu](01_context_menu.png)
 
-The page source is the HTML that makes up the page. The current `natas2`
-password has been redacted in this image:
+The page source is the HTML that makes up the page. In this first challenge the
+password is very obvious, as it is stored in a comment in the HTML. Note that
+the `natas2` password has been redacted in this image:
 
 ![The Page Source](02_view_source.png)
 
-The comment at the top in green that says that the header information can be
-ignored. That's nice of the challenge developer to make this a little easier.
+Note the comment at the top in green that says that the header information can
+be ignored. That's nice of the challenge developer to make this a little easier.
 The page also includes an `<img>` tag at the bottom:
 
 ![The Page Source Image](02_view_source_img.png)
@@ -64,5 +66,8 @@ usernames and passwords, including the `natas3` user (password redacted):
 
 ## Beyond the Challenge
 
-It's always a good idea to think about other solutions. In this challenge an
-option is to use the Developer Tools instead of the View Page Source function.
+It's always a good idea to think about other solutions. In this challenge some
+options are:
+
+1. Instead of using the View Page Source, the Developer Tools would have
+   uncovered the same directory
