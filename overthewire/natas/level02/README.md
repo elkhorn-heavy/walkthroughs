@@ -44,6 +44,6 @@ valuable source of information and can be displayed with the Developer Tools.
 It's always a good idea to think about other solutions. In this challenge some
 options are:
 
-1. Right click and select the View Page Source menu, as this does actually work
-   in Firefox 137 - browsers are a moving target
-1. The page could be saved locally and then the source can be viewed
+- Right click and select the View Page Source menu, as this does actually work
+  in Firefox 137 - browsers are a moving target
+- The page could be saved locally and then the source can be viewed
