@@ -10,7 +10,7 @@ security skills. From their website:
 After discovering the `natas3` password in the previous challenge, it can be
 used to log into http://natas3.natas.labs.overthewire.org:
 
-![The main page](images/level_03/00_main_page.png)
+![The main page](images/level_04/00_main_page.png)
 
 ## Initial Analysis
 
