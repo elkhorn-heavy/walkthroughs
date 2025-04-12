@@ -13,17 +13,16 @@ The first challenge was the introduction, and displays the following web page:
 
 ## Initial Analysis
 
-The web page description
+The web page instructions
 
 > You can find the password for the next level on this page.
 
-is fairly self-explanatory, and looking around the web page should reveal the
+are self-explanatory, and looking around the web page should reveal the next
 password.
 
 ## Approach Strategy
 
-1. Look at the page source
-1. Look at the page dependencies
+1. Look at the page source to see what is there
 
 ## Step-by-Step Solution
 
