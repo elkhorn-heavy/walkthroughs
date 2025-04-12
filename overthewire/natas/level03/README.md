@@ -33,7 +33,8 @@ item to "View Page Source":
 ![The Firefox Context Menu](01_context_menu.png)
 
 The page source is the HTML that makes up the page. The current `natas2`
-password has been redacted in this image:
+password for "WeChall" has been redacted in this image, but that's not the
+password that is needed:
 
 ![The Page Source](02_view_source.png)
 
