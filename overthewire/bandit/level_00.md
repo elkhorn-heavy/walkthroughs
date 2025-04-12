@@ -60,7 +60,7 @@ commands, because secret information should never be passed as a command line
 argument. The reason is that on multiuser systems the `ps` command will show all
 the commands running in the system - any password on the command line would be
 visible to other users!
-S
+
 So using the login information provided by the challenge, the command to run is:
 
 ```
