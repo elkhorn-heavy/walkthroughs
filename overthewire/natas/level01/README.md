@@ -13,12 +13,11 @@ The first challenge was the introduction, and displays the following web page:
 
 ## Initial Analysis
 
-The web page instructions
+The web page instructions are:
 
 > You can find the password for the next level on this page.
 
-are self-explanatory, and looking around the web page should reveal the next
-password.
+Looking around the web page should reveal the next password.
 
 ## Approach Strategy
 
