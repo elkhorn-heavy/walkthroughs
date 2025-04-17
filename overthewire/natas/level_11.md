@@ -55,7 +55,7 @@ if (array_key_exists("needle", $_REQUEST)) {
 }
 
 // If the "$key" variable has a value - that is, it was entered by the user -
-// then run the passthru command.
+// then run the code within this clause.
 if ($key != "") {
   // This is the new code: check that the input doesn't contain the character
   // ';', '|', or '&'.
@@ -102,8 +102,8 @@ string `. /etc/natas_webpass/natas11 #` will run the command:
 $ grep -i . /etc/natas_webpass/natas11 # dictionary
 ```
 
-This looks like it will work! Every line of the `natas11` file will be printed
-and then the `#` comment throws away the remainder of the command line:
+This looks like it will work! Every non-empty line of the `natas11` file will be
+printed and then the `#` comment throws away the remainder of the command line:
 
 ![The Password](images/level_11/04_password.png)
 
