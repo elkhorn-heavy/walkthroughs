@@ -37,7 +37,7 @@ There's an input box for submitting the "words". There is also a
 Clicking on the `View sourcecode` link does indeed show the source code for the
 webpage. The passwords are censored, but the logic for the page is shown:
 
-![Index Source Code](images/level_10/01_index_source_code.png)
+![Index Source Code](images/level_11/01_index_source_code.png)
 
 This is PHP code very similar to the previous challenge. With a little
 formatting and commenting it becomes clearer what is going on:
