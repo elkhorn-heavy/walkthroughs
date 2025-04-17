@@ -75,17 +75,17 @@ Clicking the highlighted request line for `index.php` displays its details, and
 scrolling down into the `Request Headers` section shows the `Referer` header
 (highlighted):
 
-![Network Requests](images/level_05/03_index_request.png)
+![Index Request](images/level_05/03_index_request.png)
 
 The next step is to alter the header. Right clicking the a request from the list
 brings up the context menu and there is a `Edit and Resend` menu item:
 
-![Network Requests](images/level_05/04_context_menu.png)
+![Context Menu](images/level_05/04_context_menu.png)
 
 This brings up an area that has the request and all its headers. The request can
 be re-sent many times to see how the server responds:
 
-![Network Requests](images/level_05/05_edit_and_resend.png)
+![Edit and Resend](images/level_05/05_edit_and_resend.png)
 
 Rats! For some reason Firefox does not allow the `Referer` to be changed. There
 are still many ways to make the request, though.
@@ -198,7 +198,7 @@ Access granted. The password for natas5 is [REMOVED: NATAS5 PASSWORD]
 </html>
 ```
 
-There it is: `Access granted` and the `natas5` password.
+There it is: `Access granted` and the `natas5` password (removed).
 
 ## Key Takeaways
 
