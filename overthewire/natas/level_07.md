@@ -33,8 +33,8 @@ webpage. The passwords are censored, but the logic for the page is shown:
 
 ![Page Source Code](images/level_07/01_source_code.png)
 
-This is PHP code. With a little formatting and commenting is becomes clearer
-exactly what is going on:
+This is PHP code. With a little formatting and commenting it becomes clearer
+what is going on:
 
 ```php
 

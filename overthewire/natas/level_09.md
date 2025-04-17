@@ -34,18 +34,17 @@ webpage. The passwords are censored, but the logic for the page is shown:
 
 ![Index Source Code](images/level_09/01_index_source_code.png)
 
-This is PHP code. With a little formatting and commenting is becomes clearer
-exactly what is going on:
+This is PHP code. With a little formatting and commenting it becomes clearer
+what is going on:
 
 ```php
-
 // This is the secret that has been encoded using the "encodeSecret" function.
 $encodedSecret = "3d3d516343746d4d6d6c315669563362";
 
-// Function that can be called with a secret and then returns an encoded version
-// of that secret.
+// Function that can be called with a secret, and returns the encoded version of
+// that secret.
 function encodeSecret($secret) {
-  // The algorithm to encode the secret:
+  // The algorithm to encode the secret
   //  1. do a base64 encoding of the secret
   //  2. do a string reversal of the result of step 1
   //  3. do a binary to hexadecimal conversion of the result of step 2
@@ -114,9 +113,10 @@ the input to the next function. The order of operations is:
 3. Take the output of step 2 as the input to `bin2hex`
 
 In PHP the opposite of `base64_encode` is `base64_decode`. The `strrev` function
-reverses a string (`abc` -> `cba`) so it is a "symmetric" function and is the
-reverse of itself. Finally, `bin2hex` can be reversed with the PHP function
-`hex2bin`. So the decoding function would be:
+reverses a string (`abc` -> `cba`) so it is a "symmetric" function and calling
+it twice produces the original string. Finally, `bin2hex` can be reversed with
+the PHP function `hex2bin`. So by putting the decoding function in the opposite
+order, the decoding function would be:
 
 ```php
 <?
@@ -124,7 +124,7 @@ function decodeSecret($hashedSecret) {
   return base64_decode(strrev(hex2bin($hashedSecret)));
 }
 
-// The encoded secret take from the page source
+// The encoded secret taken from the page source
 $encodedSecret = "3d3d516343746d4d6d6c315669563362";
 
 print("The decoded secret is: " . decodeSecret($encodedSecret))
@@ -133,6 +133,8 @@ print("The decoded secret is: " . decodeSecret($encodedSecret))
 
 This is great in theory, but how to actually run the code? A quick online search
 says that https://onlinephp.io provides a sandbox for trying out PHP code:
+
+![PHP Interpreter](images/level_09/02_php_interpreter.png)
 
 1. Paste the code into the `PHP Sandbox`
 2. Click the `Execute Code` button
@@ -154,9 +156,9 @@ There it is: the `natas9` password (removed).
 
 It's always a good idea to think about other solutions. The unix system provides
 a bunch of commands that can manipulate text. To turn this solution into a shell
-script, the three functions need to be reproduced as shell commands.
+script, the three functions need to be reproduced using shell commands.
 
-The `hex2bin` function can be reproduce using the `xxd` command that was
+The `hex2bin` function can be reproduced using the `xxd` command that was
 introduced in [Bandit 13](../bandit/level_13.md):
 
 ```
