@@ -16,10 +16,10 @@ used to log into http://natas9.natas.labs.overthewire.org:
 
 The web page has no instructions, just a prompt:
 
-> Find words containing
+> Find words containing:
 
-There's an input box to putting in the words, whatever those are. There is also
-a `View sourcecode` link that certainly seems like a hint.
+There's an input box for submitting in the "words", whatever "words" are. There
+is also a `View sourcecode` link that certainly seems like a hint.
 
 ## Approach Strategy
 
@@ -42,8 +42,7 @@ $key = "";
 
 // The "$_REQUEST" is all the input parameters in the HTTP request. So this will
 // check to see if the "needle" parameter is defined. The form on this page has
-// an input named "needle", so what this is doing is checking if the user has
-// submitted a value or not.
+// an input named "needle", so this checks if the user has submitted a value.
 if (array_key_exists("needle", $_REQUEST)) {
   // If the user put a value into the input box, then set "$key" to that value.
   $key = $_REQUEST["needle"];
@@ -70,9 +69,9 @@ the solution to the challenge? All this code appears to do is print out words
 from a dictionary file. The answer is that the `passthru` command is not
 "sanitizing" the input from the user. User input should never be trusted!
 
-All this code does is run the command `grep -i $key dictionary.txt` on the
-command line, with the value of `$key` supplied by the user. If the user submits
-the word `hacker` then the command is:
+This code runs the command `grep -i $key dictionary.txt` on the command line,
+with the value of `$key` supplied by the user. If the user submits the word
+`hacker` then the command is:
 
 ```
 $ grep -i hacker dictionary.txt
@@ -86,7 +85,7 @@ command line this becomes three commands:
 $ grep -i hacker dictionary.txt; cat /etc/natas_webpass/natas10; grep -i hacker dictionary.txt
 ```
 
-Now it looks for "hacker", then prints the next password, then looks for
+Now it looks for "hacker", then prints the `natas10` password, then looks for
 "hacker" again. Trying this out:
 
 ![The Password](images/level_10/03_password.png)
@@ -96,24 +95,25 @@ There it is: the `natas10` password (removed).
 ## Key Takeaways
 
 - It's important to never trust user input
-- The source code isn't usually available, but entering input with special
-  characters might produce output the indicates unsantized input.
+- The source code isn't usually available, but entering special characters might
+  produce output that indicates a possible vulnerability
 
 ## Beyond the Challenge
 
 It's always a good idea to think about other solutions. What is a shorter input
 string?
 
-The example input above produces good input for demonstrating the example. It
-can be shortened by
+The example input above produces good output for demonstrating the example. It
+can be shortened by:
 
 1. Doing something short to finish the `grep` command
 2. Printing the password
 3. Commenting out the remainder of the command.
 
 The input `qqq *; cat /etc/natas_webpass/natas10 #` would search for an unlikely
-string in the current directory, and then print the password. The command that
-is run is:
+string in the current directory file, and then print the password. The remainder
+of the command in the `passthru` code is commented out. The command that is run
+is:
 
 ```
 $ grep -i qqq *; cat /etc/natas_webpass/natas10 #dictionary.txt
