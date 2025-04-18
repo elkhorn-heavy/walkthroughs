@@ -159,7 +159,7 @@ $ curl -u natas4:[REMOVED: NATAS4 PASSWORD] \
 <script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
 <script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
 <script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
-<script>var wechallinfo = { "level": "natas4", "pass": "QryZXc2e0zahULdHrtHxzyYkj59kUxLQ" };</script></head>
+<script>var wechallinfo = { "level": "natas4", "pass": "[REMOVED: NATAS4 PASSWORD]" };</script></head>
 <body>
 <h1>natas4</h1>
 <div id="content">
