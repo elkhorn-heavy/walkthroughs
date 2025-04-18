@@ -83,8 +83,8 @@ bandit12@bandit:~$ cat data.txt | head
 ...SNIP...
 ```
 
-That certainly does look like a hexdump. Hexdumps are one way to convert a
-binary file into something that is _a little_ more readable for humans.
+That oes look like a hexdump. Hexdumps are one way to convert a binary file into
+something that is _a little_ more readable for humans.
 
 Now to create a temporary working directory, as recommended in the challenge
 description. The `mktemp` command will create a temporary file, or with the `-d`

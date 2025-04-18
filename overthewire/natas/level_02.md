@@ -30,14 +30,15 @@ Tools probably still work.
 
 Browsers have "Developer Tools" that can be used to look at the source for a web
 page. These tools are also called the "F12 Tools" as the `F12` key is used to
-run them. Note that the password has been redacted in this image:
+run them. Note that the password has been removed in this image:
 
-![Developer Tools (password redacted)](images/level_02/01_developer_tools.png)
+![Developer Tools (password removed)](images/level_02/01_developer_tools.png)
 
 ## Key Takeaways
 
-HTML comments contain data that is not displayed on a web page. They can be a
-valuable source of information and can be displayed with the Developer Tools.
+HTML comments contain data that is not displayed on a web page. These comments
+can be a valuable source of information and can be displayed with the Developer
+Tools.
 
 ## Beyond the Challenge
 
@@ -45,5 +46,6 @@ It's always a good idea to think about other solutions. In this challenge some
 options are:
 
 - Right click and select the View Page Source menu, as this does actually work
-  in Firefox 137 - browsers are a moving target
+  in Firefox 137. Whatever was used to prevent the context menu is no longer
+  working
 - The page could be saved locally and then the source can be viewed

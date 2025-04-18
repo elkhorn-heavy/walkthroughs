@@ -58,10 +58,10 @@ VGhlIHBhc3N3b3JkIGlzIGR0UjE3M2ZaS2IwUlJzREZTR3NnMlJXbnBOVmozcVJyCg==
 bandit10@bandit:~$
 ```
 
-That certainly does look like base 64 encoded data. It consists of only the
-letters `a` to `z` and `A` to `Z`, the digits `0` to `9`, `+`, and `/`, with
-some `=` characters at the end for padding. The `base64` command is used for
-both encoding and decoding, with the `-d` flag used for decoding.
+That does look like base 64 encoded data. It consists of only the letters `a` to
+`z` and `A` to `Z`, the digits `0` to `9`, `+`, and `/`, possibly with some `=`
+characters at the end for padding. The `base64` command is used for both
+encoding and decoding, with the `-d` flag used for decoding.
 
 ```
 bandit10@bandit:~$ base64 -d data.txt

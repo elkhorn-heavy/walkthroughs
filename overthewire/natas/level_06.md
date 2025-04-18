@@ -30,31 +30,32 @@ way to submit the username and password, perhaps something else is going on.
 ## Step-by-Step Solution
 
 Browsers have "Developer Tools" that can be used to troubleshoot problems that
-happen on web sites. These tools can also be used to exploit security
+happen on websites. These tools can also be used to exploit security
 vulnerabilities. These tools are also called the "F12 Tools" as the `F12` key is
 used to run them:
 
 ![Developer Tools](images/level_06/01_developer_tools.png)
 
 In the Developer Tools the `Network` tab is open. The top HTTP request is for
-`index.php`, which is the main file for the webpage. Clicking that request shows
-the details. On the right is a new set of tabs, the first of which is the
-`Headers`. The browser sends HTTP headers when it makes a request, and the web
-server response also contains HTTP headers.
-
-One response header that jumps out is called `Set-Cookie: loggedIn=0`. This
-header will set a cookie (name=value pair) in the browser.
+`index.php`, which is the main file for the web page. Clicking that request
+shows the details:
 
 ![Response Headers](images/level_06/02_response_headers.png)
 
+On the right is a new set of tabs, the first of which is the `Headers`. The
+browser sends HTTP headers when it makes a request, and the web server response
+also contains HTTP headers. One response header that jumps out is called
+`Set-Cookie: loggedIn=0`. This header will cause the browser to set a cookie
+(name=value pair) in the browser.
+
 Switching to the `Cookies` tab, the highlighted cookie is the one that was set
-by the response:
+by the browser when it received the response header:
 
 ![Cookies Tab](images/level_06/03_cookies_tab.png)
 
-This cookie is sent back to the web server on each new request. If `0` causes
-the message that the session is not logged in, perhaps the solution is as simple
-as setting the cookie value to `1` (a boolean value).
+Cookies are sent back to the web server on each request that follows. If `0`
+causes the message that the user is not logged in, perhaps the solution is to
+set the cookie value to `1` (assuming it is a boolean setting).
 
 By switching to the `Storage` tab, and then selecting `Cookies` on the left,
 the cookies for this site are shown. On the right the `loggedIn` cookie is
@@ -69,14 +70,15 @@ Now to click the reload button in the browser:
 
 Success! This works because reloading the page makes all the same HTTP requests
 as before, except with a cookie where `loggedIn=1`. The web server is trusting
-that the cookie won't be changed, which is obviously a bad idea.
+that the cookie won't be changed, which is a Bad Idea.
 
 There it is: `Access granted` and the `natas6` password (removed).
 
 ## Key Takeaways
 
 - HTTP responses contain headers that can include cookies
-- Cookies can be manipulated by the user, so should never contain trsuted data
+- Cookies can be manipulated by the user, so they should never contain sensitive
+  data
 - Web servers should always be suspicious about any headers or data being sent
   by the user
 
@@ -84,4 +86,4 @@ There it is: `Access granted` and the `natas6` password (removed).
 
 It's always a good idea to think about other solutions. While there are numerous
 other tools that could be used to solve this challenge, doing it in the browser
-Developer Tools doesn't require anything fancy.
+Developer Tools doesn't require anything too fancy.

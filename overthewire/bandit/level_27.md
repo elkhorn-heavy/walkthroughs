@@ -61,8 +61,8 @@ drwxr-xr-x  2 root     root      4096 Apr 10 14:23 .ssh
 bandit26@bandit:~$
 ```
 
-That `setuid` file called `bandit27-do` certainly looks similar to the
-`sudo`-like binary that was found in level 20.
+That `setuid` file called `bandit27-do` looks similar to the `sudo`-like binary
+that was found in level 20.
 
 ```
 bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27

@@ -23,8 +23,8 @@ The prompt is the same
 
 > Find words containing:
 
-There's an input box for submitting the "words". There is also a
-`View sourcecode` link that certainly seems like a hint.
+There's an input box for entering the "words". There is also a `View sourcecode`
+link that seems like a hint.
 
 ## Approach Strategy
 
@@ -34,13 +34,13 @@ There's an input box for submitting the "words". There is also a
 
 ## Step-by-Step Solution
 
-Clicking on the `View sourcecode` link does indeed show the source code for the
-webpage. The passwords are censored, but the logic for the page is shown:
+Clicking the `View sourcecode` link does indeed show the source code for the web
+page. The passwords are censored, but the PHP code for the page is shown:
 
 ![Index Source Code](images/level_11/01_index_source_code.png)
 
-This is PHP code very similar to the previous challenge. With a little
-formatting and commenting it becomes clearer what is going on:
+This code is very similar to the previous challenge. Some formatting and
+comments help to understand what this PHP code is doing:
 
 ```php
 // Initialize the "$key" variable to the empty string.

@@ -31,7 +31,7 @@ change these headers. Try to figure out what header is being used.
 ## Step-by-Step Solution
 
 Browsers have "Developer Tools" that can be used to troubleshoot problems that
-happen on web sites. These tools can also be used to exploit security
+happen on websites. These tools can also be used to exploit security
 vulnerabilities. These tools are also called the "F12 Tools" as the `F12` key is
 used to run them:
 
@@ -77,8 +77,8 @@ scrolling down into the `Request Headers` section shows the `Referer` header
 
 ![Index Request](images/level_05/03_index_request.png)
 
-The next step is to alter the header. Right clicking the a request from the list
-brings up the context menu and there is a `Edit and Resend` menu item:
+The next step is to alter the header. Right clicking the request in the list on
+the left brings up the context menu. There is an `Edit and Resend` menu item:
 
 ![Context Menu](images/level_05/04_context_menu.png)
 
@@ -90,10 +90,10 @@ be re-sent many times to see how the server responds:
 Rats! For some reason Firefox does not allow the `Referer` to be changed. There
 are still many ways to make the request, though.
 
-The `curl` command is used to make HTTP requests. Compared to using a browser it
-definitely has a learning curve, but it's an important tool to know. Starting
-over using `curl` instead of the browser, the first task is to fetch to main
-webpage:
+The `curl` command is used on the command line to make HTTP requests. Compared
+to using a browser it definitely has a learning curve, but it's an important
+tool to know. Starting over using `curl` instead of the browser, the first task
+is to fetch the main web page:
 
 ```
 $ curl http://natas4.natas.labs.overthewire.org/index.php
@@ -113,8 +113,9 @@ the credentials required.</p>
 </body></html>
 ```
 
-The response is the HTML for a page that says that credentials need to be
-supplied. The `-u` switch for `curl` can do this:
+The output of the `curl` command is the web server response to the request. It
+is the HTML for a page that says that credentials need to be supplied. The `-u`
+switch for `curl` can do this:
 
 ```
 $ curl -u natas4:[REMOVED: NATAS4 PASSWORD] \
@@ -142,9 +143,10 @@ Access disallowed. You are visiting from "" while authorized users should come o
 ```
 
 Progress! The `natas4` password has of course been removed from the text above.
-It still has the message that the visit is coming from `""`. Now to use the `-H`
-flag to set the `Referer` header. This will double-check that the web server is
-indeed looking for this header:
+The page still has the message that the visit is coming from `""`. Now to use
+the `-H` flag to set a header: the `Referer` header. This step could be skipped,
+but it does double-check that the web server is indeed looking for the `Referer`
+header:
 
 ```
 $ curl -u natas4:[REMOVED: NATAS4 PASSWORD] \
@@ -175,7 +177,9 @@ Access disallowed. You are visiting from "foo" while authorized users should com
 And now for the final request:
 
 ```
-$ curl -u natas4:[REMOVED: NATAS4 PASSWORD] http://natas4.natas.labs.overthewire.org/index.php -H "Referer: http://natas5.natas.labs.overthewire.org/"
+$ curl -u natas4:[REMOVED: NATAS4 PASSWORD] \
+    -H 'Referer: http://natas5.natas.labs.overthewire.org/' \
+    http://natas4.natas.labs.overthewire.org/index.php
 <html>
 <head>
 <!-- This stuff in the header has nothing to do with the level -->
@@ -203,9 +207,10 @@ There it is: `Access granted` and the `natas5` password (removed).
 ## Key Takeaways
 
 - HTTP requests contain headers that can be manipulated
-- Browsers can resend requests but apparently some headers are off limits
-- The `curl` command is a valuable tool, particularly if a group of requests
-  need to be scripted
+- Browsers can resend requests but in Firefox some headers are apparently off
+  limits
+- The `curl` command is a valuable tool, especially if a group of requests need
+  to be scripted
 - Web servers should always be suspicious about any headers or data being sent
   by the user
 
@@ -213,4 +218,4 @@ There it is: `Access granted` and the `natas5` password (removed).
 
 It's always a good idea to think about other solutions. While there are numerous
 other tools that could be used to solve this challenge, `curl` is fairly common
-and good to learn.
+and good to learn. Perhaps other browsers allow editing the `Referer` header?

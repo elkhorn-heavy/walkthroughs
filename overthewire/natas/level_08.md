@@ -19,29 +19,31 @@ The web page has no instructions, just links for `Home` and `About`.
 ## Approach Strategy
 
 1. View the source code for the page and look for interesting things
-1. Click the `Home` link to see what happens, and if it's a different page then
-   view its source code
+1. Click the `Home` link to see what happens, and then view its source code
 1. Click the `About` link to see what happens, and then view its source code
 
 ## Step-by-Step Solution
 
-Right-clicking in the index page bring up the context menu, and the
+Right-clicking anywhere on the index page brings up the context menu, and the
 `View Page Source` menu item displays the HTML source for the page. The `natas7`
-password has been removed but the comment at the bottom gives a very strong
-hint:
+password has been removed:
 
 ![Index Page Source](images/level_08/01_index_page_source.png)
 
-The `Home` link displays the same page but with "this is the front page" text
-added. The `About` link similarly displays the same page but with "this is the
-about page" text added.
+The comment near the bottom has a hint:
+
+> hint: password for webuser natas8 is in /etc/natas_webpass/natas8
+
+Back to the web page, clicking the `Home` link displays the same page but with
+"this is the front page" text added. The `About` link similarly displays the
+same page but with "this is the about page" text added.
 
 What is interesting is the URLs of these two pages. Looking at the `Home` page:
 
 ![The Home Page](images/level_08/02_home_page.png)
 
 The word `home` is sent to the server as the value of the `page` parameter. How
-secure is this web site? What happens if some unexpected value is sent in as the
+secure is this website? What happens if some unexpected value is sent in as the
 page parameter? For example, the page source said that the `natas8` password is
 stored in `/etc/natas_webpass/natas8`. Using that as the `page` parameter gives:
 
@@ -56,7 +58,7 @@ is not expecting that any file readable by the web server can be displayed.
 
 ## Key Takeaways
 
-- Look for places where the file being displayed on the page can be controlled.
+- Look for files being displayed on the page and see if they can be controlled.
 
 ## Beyond the Challenge
 

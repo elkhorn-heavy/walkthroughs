@@ -18,8 +18,8 @@ The web page has no instructions, just a prompt:
 
 > Find words containing:
 
-There's an input box for submitting in the "words", whatever "words" are. There
-is also a `View sourcecode` link that certainly seems like a hint.
+There's an input box for entering the "words", whatever "words" are. There is
+also a `View sourcecode` link that seems like a hint.
 
 ## Approach Strategy
 
@@ -28,13 +28,12 @@ is also a `View sourcecode` link that certainly seems like a hint.
 
 ## Step-by-Step Solution
 
-Clicking on the `View sourcecode` link does indeed show the source code for the
-webpage. The passwords are censored, but the logic for the page is shown:
+Clicking the `View sourcecode` link does indeed show the source code for the web
+page. The passwords are censored, but the PHP code for the page is shown:
 
 ![Index Source Code](images/level_10/01_index_source_code.png)
 
-This is PHP code. With a little formatting and commenting it becomes clearer
-what is going on:
+Some formatting and comments help to understand what this PHP code is doing:
 
 ```php
 // Initialize the "$key" variable to the empty string.
@@ -78,8 +77,8 @@ $ grep -i hacker dictionary.txt
 ```
 
 A sneaky user can exploit this command. What if the input was
-`hacker dictionary.txt; cat /etc/natas_webpass/natas10; grep -i hacker`? On the
-command line this becomes three commands:
+`hacker dictionary.txt; cat /etc/natas_webpass/natas10; grep -i hacker`? When
+the web page runs the `passthru` command, this input becomes three commands:
 
 ```
 $ grep -i hacker dictionary.txt; cat /etc/natas_webpass/natas10; grep -i hacker dictionary.txt
@@ -95,8 +94,7 @@ There it is: the `natas10` password (removed).
 ## Key Takeaways
 
 - It's important to never trust user input
-- The source code isn't usually available, but entering special characters might
-  produce output that indicates a possible vulnerability
+- It's dangerous to allow user input in commands that execute shell commands
 
 ## Beyond the Challenge
 
@@ -111,9 +109,9 @@ can be shortened by:
 3. Commenting out the remainder of the command.
 
 The input `qqq *; cat /etc/natas_webpass/natas10 #` would search for an unlikely
-string in the current directory file, and then print the password. The remainder
-of the command in the `passthru` code is commented out. The command that is run
-is:
+string in all the current directory's files (which possibly could print a lot of
+garbage), and then print the password. The remainder of the command in the
+`passthru` code is commented out. The command that is run in `passthru` is:
 
 ```
 $ grep -i qqq *; cat /etc/natas_webpass/natas10 #dictionary.txt

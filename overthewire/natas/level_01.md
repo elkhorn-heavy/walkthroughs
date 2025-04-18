@@ -26,21 +26,21 @@ Looking around the web page should reveal the next password.
 ## Step-by-Step Solution
 
 Browsers provide a way to look at the "source code" of a web page. For example
-in Firefox, right-clicking on a page brings up a context menu that includes an
-item to "View Page Source":
+in Firefox, right-clicking anywhere on a page brings up a context menu that
+includes an item to "View Page Source":
 
 ![The Firefox Context Menu](images/level_01/01_context_menu.png)
 
 The page source is the HTML that makes up the page. In this first challenge the
 password is very obvious, as it is stored in a comment in the HTML. Note that
-the password has been redacted in this image:
+the password has been removed in this image:
 
-![The Page Source (password redacted)](images/level_01/02_view_source.png)
+![The Page Source (password removed)](images/level_01/02_view_source.png)
 
 ## Key Takeaways
 
-HTML comments contain data that is not displayed on a web page. They can be a
-valuable source of information.
+HTML comments contain data that is not displayed on a web page. These comments
+can be a valuable source of information.
 
 ## Beyond the Challenge
 
@@ -49,4 +49,4 @@ web page. Browsers also have "Developer Tools" that can be used to look at the
 source for a web page. These tools are also called the "F12 Tools" as the `F12`
 key is used to run them:
 
-![Developer Tools (password redacted)](images/level_01/03_developer_tools.png)
+![Developer Tools (password removed)](images/level_01/03_developer_tools.png)

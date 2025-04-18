@@ -18,8 +18,8 @@ The web page has no instructions, just a prompt:
 
 > Input secret
 
-There's an input box to putting in the secret and a `View sourcecode` link that
-certainly seems like a hint.
+There's an input box for entering some kind of secret, and a `View sourcecode`
+link that seems like a hint.
 
 ## Approach Strategy
 
@@ -28,23 +28,22 @@ certainly seems like a hint.
 
 ## Step-by-Step Solution
 
-Clicking on the `View sourcecode` link does indeed show the source code for the
-webpage. The passwords are censored, but the logic for the page is shown:
+Clicking the `View sourcecode` link does indeed show the source code for the
+web page. The passwords are censored, but the PHP code for the page is shown:
 
 ![Page Source Code](images/level_07/01_source_code.png)
 
-This is PHP code. With a little formatting and commenting it becomes clearer
-what is going on:
+Some formatting and comments help to understand what this PHP code is doing:
 
 ```php
 
-// Include the secret from another file. It hides it a little bit from people
-// who are looking at the page source.
+// Include the secret from another file. The idea is that instead of including
+// the secret in the page source, it is hidden away in a file.
 include "includes/secret.inc";
 
 // The $_POST array is all the values that were submitted in the form. Does it
-// include "submit", the Submit Query button? In other words, is this page being
-// displayed after the form was submitted? If so then print some extra text.
+// include "submit", the Submit Query button? In other words, is this code being
+// run after the form was submitted? If so, then print some extra text.
 if (array_key_exists("submit", $_POST)) {
   // Does $secret from the "includes/secret.inc" file match the 'secret' value
   // entered by the user on the form?
@@ -67,7 +66,8 @@ it by putting the path into the URL bar in the browser?
 ![A Blank Secret](images/level_07/02_secret_blank.png)
 
 Putting the file into the URL bar didn't seem to work, as the page is blank. But
-wait - this is the output of the code on the page, not the code itself. Right-clicking the page and selecting "View Page Source" shows the source code:
+wait - this is the output of the code on the page, not the code itself. Right-clicking anywhere on the page and selecting "View Page Source" shows the
+source code:
 
 ![The Secret](images/level_07/03_secret.png)
 
