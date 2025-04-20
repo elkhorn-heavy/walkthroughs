@@ -29,8 +29,8 @@ link that seems like a hint.
 
 ## Step-by-Step Solution
 
-Clicking the `View sourcecode` link does indeed show the source code for the
-web page. The passwords are censored, but the PHP code for the page is shown:
+Clicking the `View sourcecode` link shows the source code for the web page. The
+passwords are censored, but the PHP code for the page is shown:
 
 ![Index Source Code](images/level_09/01_index_source_code.png)
 

@@ -34,8 +34,8 @@ link that seems like a hint.
 
 ## Step-by-Step Solution
 
-Clicking the `View sourcecode` link does indeed show the source code for the web
-page. The passwords are censored, but the PHP code for the page is shown:
+Clicking the `View sourcecode` link shows the source code for the web page. The
+passwords are censored, but the PHP code for the page is shown:
 
 ![Index Source Code](images/level_11/01_index_source_code.png)
 
@@ -57,9 +57,10 @@ if (array_key_exists("needle", $_REQUEST)) {
 // If the "$key" variable has a value - that is, it was entered by the user -
 // then run the code within this clause.
 if ($key != "") {
-  // This is the new code: check that the input doesn't contain the character
+  // This is the new code: check if the input contains any of the characters
   // ';', '|', or '&'.
   if (preg_match('/[;|&]/', $key)) {
+    // Tell the user that the input can't contain the illegal characters.
     print "Input contains an illegal character!";
   } else {
     // Run the "grep" command in case-insensitive ("-i") mode to look for the
@@ -80,14 +81,15 @@ If there are no secrets or passwords or anything else in this code, then what is
 the solution to the challenge? All this code appears to do is print out words
 from a dictionary file. The `$key` used in the `passthru` command now has some
 sanitizing of the input: the characters `;`, `|`, and `&` are no longer allowed.
-This filter can be tried by tweaking the input from the previous challenge:
+This filter can be tried by tweaking the input from the previous challenge to
+print the `natas11` password for this level:
 `hacker dictionary.txt; cat /etc/natas_webpass/natas11; grep -i hacker`:
 
 ![Illegal Character](images/level_11/03_illegal_character.png)
 
-Great, this is expected: the character `;` is no longer allowed.
+This is expected as the character `;` is no longer allowed.
 
-So, the code runs the command:
+The code runs `passthru` with the command:
 
 ```
 $ grep -i $key dictionary
@@ -112,13 +114,12 @@ There it is: the `natas11` password (removed).
 ## Key Takeaways
 
 - It's important to never trust user input
+- It's dangerous to allow user input in commands that execute shell commands
 - Input filters have to catch every malicious character - it is better to use a
   list of characters that are safe, rather than try to find every unsafe
   character
-- The source code isn't usually available, but entering special characters might
-  produce output that indicates a possible vulnerability
 
 ## Beyond the Challenge
 
-It's always a good idea to think about other solutions. However, this filter is
-pretty good!
+It's always a good idea to think about other solutions. However, even though
+this filter is flawed, it does prevent most attacks.
