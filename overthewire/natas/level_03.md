@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 3
+# OverTheWire - Natas - Level 4
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
@@ -7,8 +7,8 @@ security skills. From their website:
 
 ## Challenge Overview
 
-After discovering the `natas2` password in the previous challenge, it can be
-used to log into http://natas2.natas.labs.overthewire.org:
+After discovering the `natas3` password in the previous challenge, it can be
+used to log into http://natas3.natas.labs.overthewire.org:
 
 ![The main page](images/level_03/00_main_page.png)
 
@@ -18,7 +18,8 @@ The web page instructions are:
 
 > There is nothing on this page
 
-Very interesting, but there must be _something_ somewhere.
+This is the same message as the previous challenge, but the assumption is that
+there must be _something_ somewhere else.
 
 ## Approach Strategy
 
@@ -32,34 +33,39 @@ includes an item to "View Page Source":
 
 ![The Firefox Context Menu](images/level_03/01_context_menu.png)
 
-The page source is the HTML that makes up the page. The current `natas2`
+The page source is the HTML that makes up the page. The current `natas3`
 password for "WeChall" has been removed in this image, but that's not the
 password that is needed:
 
 ![The Page Source](images/level_03/02_view_source.png)
 
-The comment at the top in green that says that the header information can be
-ignored. That's nice of the challenge developer to make this a little easier.
-The page also includes an `<img>` tag at the bottom:
+The comment at the top in green says that the header information can be ignored.
+That's nice of the challenge developer to make this a little easier.
 
-![The Page Source Image](images/level_03/03_view_source_img.png)
+The page has another comment at the bottom saying
 
-The image on the page doesn't appear to be of interest. However, it is in a
-directory called `files`. Perhaps there is something else in that directory?
-Appending `/files` to the original web page url results in
-http://natas2.natas.labs.overthewire.org/files, which provides a nice list of
-what is in the directory, including something called `users.txt`:
+> No more information leaks!! Not even Google will find it this time...
 
-![The /files Directory](images/level_03/04_files_directory.png)
+This is a nice hint! Search engines use "web crawlers", or "spiders", or
+"robots" to index all the content on a website. This is done by loading the
+front page of the website and then following every link that exists. The
+administrator of a website can control the robots using the `/robots.txt` file:
 
-Clicking the `users.txt` link will display the file. It contains pairs of
-usernames and passwords, including the `natas3` user (password removed):
+![The Robots file](images/level_03/03_robots_txt.png)
+
+This file says that the secret directory `/s3cr3t/` should not be indexed. That
+directory probably contains interesting things:
+
+![The Secret Directory](images/level_03/04_secret.png)
+
+Clicking the `users.txt` link will display the file. It contains the username
+and password for the `natas4` user (password removed):
 
 ![The users.txt file](images/level_03/05_users_file.png)
 
 ## Key Takeaways
 
-- Reading the source code of a web page can uncover directories of interest
+- Reading the `robots.txt` file can uncover items of interest
 - Misconfigured web servers can provide directory listings and/or sensitive
   files
 

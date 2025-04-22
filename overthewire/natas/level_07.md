@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 7
+# OverTheWire - Natas - Level 8
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
@@ -7,86 +7,60 @@ security skills. From their website:
 
 ## Challenge Overview
 
-After discovering the `natas6` password in the previous challenge, it can be
-used to log into http://natas6.natas.labs.overthewire.org:
+After discovering the `natas7` password in the previous challenge, it can be
+used to log into http://natas7.natas.labs.overthewire.org:
 
-![The main page](images/level_07/00_main_page.png)
+![The Index Page](images/level_07/00_index_page.png)
 
 ## Initial Analysis
 
-The web page has no instructions, just a prompt:
-
-> Input secret
-
-There's an input box for entering some kind of secret, and a `View sourcecode`
-link that seems like a hint.
+The web page has no instructions, just links for `Home` and `About`.
 
 ## Approach Strategy
 
-1. Click the `View sourcecode` link
-1. Make it up from there!
+1. View the source code for the page and look for interesting things
+1. Click the `Home` link to see what happens, and then view its source code
+1. Click the `About` link to see what happens, and then view its source code
 
 ## Step-by-Step Solution
 
-Clicking the `View sourcecode` link shows the source code for the web page. The
-passwords are censored, but the PHP code for the page is shown:
+Right-clicking anywhere on the index page brings up the context menu, and the
+`View Page Source` menu item displays the HTML source for the page. The `natas7`
+password has been removed:
 
-![Page Source Code](images/level_07/01_source_code.png)
+![Index Page Source](images/level_07/01_index_page_source.png)
 
-Some formatting and comments help to understand what this PHP code is doing:
+The comment near the bottom has a hint:
 
-```php
+> hint: password for webuser natas8 is in /etc/natas_webpass/natas8
 
-// Include the secret from another file. The idea is that instead of including
-// the secret in the page source, it is hidden away in a file.
-include "includes/secret.inc";
+Back to the web page, clicking the `Home` link displays the same page but with
+"this is the front page" text added. The `About` link similarly displays the
+same page but with "this is the about page" text added.
 
-// The $_POST array is all the values that were submitted in the form. Does it
-// include "submit", the Submit Query button? In other words, is this code being
-// run after the form was submitted? If so, then print some extra text.
-if (array_key_exists("submit", $_POST)) {
-  // Does $secret from the "includes/secret.inc" file match the 'secret' value
-  // entered by the user on the form?
-  if ($secret == $_POST['secret']) {
-    // The secret matches - print the next password.
-    print "Access granted. The password for natas7 is <censored>";
-  } else {
-    // The secret does not match.
-    print "Wrong secret";
-  }
-}
-```
+What is interesting is the URLs of these two pages. Looking at the `Home` page:
 
-The code here is solid! No logic errors that can be exploited, or anything like
-that.
+![The Home Page](images/level_07/02_home_page.png)
 
-However, what about that `includes/secret.inc` file? Is it possible to retrieve
-it by putting the path into the URL bar in the browser?
+The word `home` is sent to the server as the value of the `page` parameter. How
+secure is this website? What happens if some unexpected value is sent in as the
+page parameter? For example, the page source said that the `natas8` password is
+stored in `/etc/natas_webpass/natas8`. Using that as the `page` parameter gives:
 
-![A Blank Secret](images/level_07/02_secret_blank.png)
+![The Password](images/level_07/03_password.png)
 
-Putting the file into the URL bar didn't seem to work, as the page is blank. But
-wait - this is the output of the code on the page, not the code itself. Right-clicking anywhere on the page and selecting "View Page Source" shows the
-source code:
+There it is: the `natas8` password (removed).
 
-![The Secret](images/level_07/03_secret.png)
-
-Aha, there is the secret! The developer was trying to be sneaky by putting the
-secret in another file, but that file can still be retrieved from the web
-server.
-
-Now to return to the index page, enter the secret, and submit the form:
-
-![The Password](images/level_07/04_password.png)
-
-There it is: `Access granted` and the `natas7` password (removed).
+What happened here is that the server is taking the `page` parameter and then
+displaying the contents of that file on the screen. It is only expecting `home`
+to display a file named `home`, or `about` to display a file named `about`. It
+is not expecting that any file readable by the web server can be displayed.
 
 ## Key Takeaways
 
-- Check all dependencies (includes, imports) in case they contain sensitive
-  information
+- Look for files being displayed on the page and see if they can be controlled.
 
 ## Beyond the Challenge
 
 It's always a good idea to think about other solutions, but for this challenge
-it seems that displaying the included secret is the key to success.
+it seems that displaying the indicated file is the way to go.

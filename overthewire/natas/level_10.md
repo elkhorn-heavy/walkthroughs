@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 10
+# OverTheWire - Natas - Level 11
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
@@ -7,33 +7,40 @@ security skills. From their website:
 
 ## Challenge Overview
 
-After discovering the `natas9` password in the previous challenge, it can be
-used to log into http://natas9.natas.labs.overthewire.org:
+After discovering the `natas10` password in the previous challenge, it can be
+used to log into http://natas10.natas.labs.overthewire.org:
 
 ![The Index Page](images/level_10/00_index_page.png)
 
 ## Initial Analysis
 
-The web page has no instructions, just a prompt:
+This looks very similar to the previous challenge except that there is new text
+saying:
+
+> For security reasons, we now filter on certain characters
+
+The prompt is the same
 
 > Find words containing:
 
-There's an input box for entering the "words", whatever "words" are. There is
-also a `View sourcecode` link that seems like a hint.
+There's an input box for entering the "words". There is also a `View sourcecode`
+link that seems like a hint.
 
 ## Approach Strategy
 
 1. Click the `View sourcecode` link
-1. Make it up from there!
+1. The code has probably been tightened up a bit but see if it can be
+   exploited
 
 ## Step-by-Step Solution
 
 Clicking the `View sourcecode` link shows the source code for the web page. The
 passwords are censored, but the PHP code for the page is shown:
 
-![Index Source Code](images/level_10/01_index_source_code.png)
+![Index Source Code](images/level_11/01_index_source_code.png)
 
-Some formatting and comments help to understand what this PHP code is doing:
+This code is very similar to the previous challenge. Some formatting and
+comments help to understand what this PHP code is doing:
 
 ```php
 // Initialize the "$key" variable to the empty string.
@@ -48,12 +55,19 @@ if (array_key_exists("needle", $_REQUEST)) {
 }
 
 // If the "$key" variable has a value - that is, it was entered by the user -
-// then run the passthru command.
+// then run the code within this clause.
 if ($key != "") {
-  // Run the "grep" command in case-insensitive ("-i") mode to look for the
-  // value of "$key" in the file "dictionary.txt". Print the output of the grep
-  // command.
-  passthru("grep -i $key dictionary.txt");
+  // This is the new code: check if the input contains any of the characters
+  // ';', '|', or '&'.
+  if (preg_match('/[;|&]/', $key)) {
+    // Tell the user that the input can't contain the illegal characters.
+    print "Input contains an illegal character!";
+  } else {
+    // Run the "grep" command in case-insensitive ("-i") mode to look for the
+    // value of "$key" in the file "dictionary.txt". Print the output of the
+    // grep command.
+    passthru("grep -i $key dictionary.txt");
+  }
 }
 ```
 
@@ -61,58 +75,51 @@ This code is pretty good, but it doesn't have anything to do with passwords. It
 just looks up words in a dictionary and prints anything that matches. Entering
 the word `hacker` and clicking the `Search` button displays:
 
-![Search for Hacker](images/level_10/02_hacker_search.png)
+![Search for Hacker](images/level_11/02_hacker_search.png)
 
 If there are no secrets or passwords or anything else in this code, then what is
 the solution to the challenge? All this code appears to do is print out words
-from a dictionary file. The answer is that the `passthru` command is not
-"sanitizing" the input from the user. User input should never be trusted!
+from a dictionary file. The `$key` used in the `passthru` command now has some
+sanitizing of the input: the characters `;`, `|`, and `&` are no longer allowed.
+This filter can be tried by tweaking the input from the previous challenge to
+print the `natas11` password for this level:
+`hacker dictionary.txt; cat /etc/natas_webpass/natas11; grep -i hacker`:
 
-This code runs the command `grep -i $key dictionary.txt` on the command line,
-with the value of `$key` supplied by the user. If the user submits the word
-`hacker` then the command is:
+![Illegal Character](images/level_11/03_illegal_character.png)
 
-```
-$ grep -i hacker dictionary.txt
-```
+This is expected as the character `;` is no longer allowed.
 
-A sneaky user can exploit this command. What if the input was
-`hacker dictionary.txt; cat /etc/natas_webpass/natas10; grep -i hacker`? When
-the web page runs the `passthru` command, this input becomes three commands:
+The code runs `passthru` with the command:
 
 ```
-$ grep -i hacker dictionary.txt; cat /etc/natas_webpass/natas10; grep -i hacker dictionary.txt
+$ grep -i $key dictionary
 ```
 
-Now it looks for "hacker", then prints the `natas10` password, then looks for
-"hacker" again. Trying this out:
+Looking at the `man` page for `grep`, it can also search for regular
+expressions. So running `grep . file` would return every line of `file` that has
+one or more characters. Combining this with the comment character `#`, the input
+string `. /etc/natas_webpass/natas11 #` will run the command:
 
-![The Password](images/level_10/03_password.png)
+```
+$ grep -i . /etc/natas_webpass/natas11 # dictionary
+```
 
-There it is: the `natas10` password (removed).
+This looks like it will work! Every non-empty line of the `natas11` file will be
+printed and then the `#` comment throws away the remainder of the command line:
+
+![The Password](images/level_11/04_password.png)
+
+There it is: the `natas11` password (removed).
 
 ## Key Takeaways
 
 - It's important to never trust user input
 - It's dangerous to allow user input in commands that execute shell commands
+- Input filters have to catch every malicious character - it is better to use a
+  list of characters that are safe, rather than try to find every unsafe
+  character
 
 ## Beyond the Challenge
 
-It's always a good idea to think about other solutions. What is a shorter input
-string?
-
-The example input above produces good output for demonstrating the example. It
-can be shortened by:
-
-1. Doing something short to finish the `grep` command
-2. Printing the password
-3. Commenting out the remainder of the command.
-
-The input `qqq *; cat /etc/natas_webpass/natas10 #` would search for an unlikely
-string in all the current directory's files (which possibly could print a lot of
-garbage), and then print the password. The remainder of the command in the
-`passthru` code is commented out. The command that is run in `passthru` is:
-
-```
-$ grep -i qqq *; cat /etc/natas_webpass/natas10 #dictionary.txt
-```
+It's always a good idea to think about other solutions. However, even though
+this filter is flawed, it does prevent most attacks.

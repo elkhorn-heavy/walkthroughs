@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 5
+# OverTheWire - Natas - Level 6
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
@@ -7,8 +7,8 @@ security skills. From their website:
 
 ## Challenge Overview
 
-After discovering the `natas4` password in the previous challenge, it can be
-used to log into http://natas4.natas.labs.overthewire.org:
+After discovering the `natas5` password in the previous challenge, it can be
+used to log into http://natas5.natas.labs.overthewire.org:
 
 ![The main page](images/level_05/00_main_page.png)
 
@@ -16,17 +16,16 @@ used to log into http://natas4.natas.labs.overthewire.org:
 
 The web page instructions are:
 
-> Access disallowed. You are visiting from "" while authorized users should come
-> only from "http://natas5.natas.labs.overthewire.org/"
+> Access disallowed. You are not logged in
 
-It appears that the web server is checking one of the HTTP headers for a
-specific value. This does not really provide any security as the user is able to
-change these headers. Try to figure out what header is being used.
+This is interesting! The previous challenges all requested a username and
+password before the page could be viewed. While the solution might be to find a
+way to submit the username and password, perhaps something else is going on.
 
 ## Approach Strategy
 
 1. Use "Developer Tools" to look at the network traffic
-1. Add HTTP headers to the requests to satisfy the web server check
+1. Make it up from there!
 
 ## Step-by-Step Solution
 
@@ -37,185 +36,54 @@ used to run them:
 
 ![Developer Tools](images/level_05/01_developer_tools.png)
 
-Clicking the "Refresh page" link on the web page will re-send the network
-requests for the page:
+In the Developer Tools the `Network` tab is open. The top HTTP request is for
+`index.php`, which is the main file for the web page. Clicking that request
+shows the details:
 
-![Network Requests](images/level_05/02_network_requests.png)
+![Response Headers](images/level_05/02_response_headers.png)
 
-Two things happened here.
+On the right is a new set of tabs, the first of which is the `Headers`. The
+browser sends HTTP headers when it makes a request, and the web server response
+also contains HTTP headers. One response header that jumps out is called
+`Set-Cookie: loggedIn=0`. This header will cause the browser to set a cookie
+(name=value pair) in the browser.
 
-The first thing is that the description box on the page now has a new message:
+Switching to the `Cookies` tab, the highlighted cookie is the one that was set
+by the browser when it received the response header:
 
-> Access disallowed. You are visiting from
-> "http://natas4.natas.labs.overthewire.org/index.php" while authorized users
-> should come only from "http://natas5.natas.labs.overthewire.org/"
+![Cookies Tab](images/level_05/03_cookies_tab.png)
 
-This is _very_ important and needs some explanation.
+Cookies are sent back to the web server on each request that follows. If `0`
+causes the message that the user is not logged in, perhaps the solution is to
+set the cookie value to `1` (assuming it is a boolean setting).
 
-When a browser makes an HTTP request it sends a collection of headers. Each
-header has a name and a value. In this instance, the header of interest is
-called `Referer`. This header tells the web server which web page the request is
-coming from.
+By switching to the `Storage` tab, and then selecting `Cookies` on the left,
+the cookies for this site are shown. On the right the `loggedIn` cookie is
+highlighted. By double-clicking the `Value` of `0` for the cookie, it can be
+changed:
 
-When this challenge page was first loaded, it said _You are visiting from ""_.
-That's because there was no referrer page. However, when clicking the "Refresh
-page" link, the browser sends the current page URL as the referrer. The solution
-to the challenge is probably to fake the `Referer` header to be from the site
-"http://natas5.natas.labs.overthewire.org/".
+![Updated Cookie](images/level_05/04_updated_cookie.png)
 
-The second thing that happened is that the `Network` tab in the Developer Tools
-now lists the HTTP requests that were made. The first (highlighted) request is
-for the `index.php` page itself. The other requests are for dependencies of the
-web page. One type of dependency is Cascading Style Sheet (`.css`) files
-defining page style such as fonts, colours, and layout. Another type of
-dependency is JavaScript (`.js`) files that execute code in the browser to make
-the web page interactive.
+Now to click the reload button in the browser:
 
-Clicking the highlighted request line for `index.php` displays its details, and
-scrolling down into the `Request Headers` section shows the `Referer` header
-(highlighted):
+![Reloaded Page](images/level_05/05_reloaded_page.png)
 
-![Index Request](images/level_05/03_index_request.png)
+Success! This works because reloading the page makes all the same HTTP requests
+as before, except with a cookie where `loggedIn=1`. The web server is trusting
+that the cookie won't be changed, which is a Bad Idea.
 
-The next step is to alter the header. Right clicking the request in the list on
-the left brings up the context menu. There is an `Edit and Resend` menu item:
-
-![Context Menu](images/level_05/04_context_menu.png)
-
-This brings up an area that has the request and all its headers. The request can
-be re-sent many times to see how the server responds:
-
-![Edit and Resend](images/level_05/05_edit_and_resend.png)
-
-Rats! For some reason Firefox does not allow the `Referer` to be changed. There
-are still many ways to make the request, though.
-
-The `curl` command is used on the command line to make HTTP requests. Compared
-to using a browser it definitely has a learning curve, but it's an important
-tool to know. Starting over using `curl` instead of the browser, the first task
-is to fetch the main web page:
-
-```
-$ curl http://natas4.natas.labs.overthewire.org/index.php
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>401 Unauthorized</title>
-</head><body>
-<h1>Unauthorized</h1>
-<p>This server could not verify that you
-are authorized to access the document
-requested.  Either you supplied the wrong
-credentials (e.g., bad password), or your
-browser doesn't understand how to supply
-the credentials required.</p>
-<hr>
-<address>Apache/2.4.58 (Ubuntu) Server at natas4.natas.labs.overthewire.org Port 80</address>
-</body></html>
-```
-
-The output of the `curl` command is the web server response to the request. It
-is the HTML for a page that says that credentials need to be supplied. The `-u`
-switch for `curl` can do this:
-
-```
-$ curl -u natas4:[REMOVED: NATAS4 PASSWORD] \
-    http://natas4.natas.labs.overthewire.org/index.php
-<html>
-<head>
-<!-- This stuff in the header has nothing to do with the level -->
-<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
-<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
-<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
-<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
-<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
-<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
-<script>var wechallinfo = { "level": "natas4", "pass": "[REMOVED: NATAS4 PASSWORD]" };</script></head>
-<body>
-<h1>natas4</h1>
-<div id="content">
-
-Access disallowed. You are visiting from "" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
-<br/>
-<div id="viewsource"><a href="index.php">Refresh page</a></div>
-</div>
-</body>
-</html>
-```
-
-Progress! The `natas4` password has of course been removed from the text above.
-The page still has the message that the visit is coming from `""`. Now to use
-the `-H` flag to set a header: the `Referer` header. This step could be skipped,
-but it does double-check that the web server is indeed looking for the `Referer`
-header:
-
-```
-$ curl -u natas4:[REMOVED: NATAS4 PASSWORD] \
-    -H 'Referer: foo' \
-    http://natas4.natas.labs.overthewire.org/index.php
-<html>
-<head>
-<!-- This stuff in the header has nothing to do with the level -->
-<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
-<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
-<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
-<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
-<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
-<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
-<script>var wechallinfo = { "level": "natas4", "pass": "[REMOVED: NATAS4 PASSWORD]" };</script></head>
-<body>
-<h1>natas4</h1>
-<div id="content">
-
-Access disallowed. You are visiting from "foo" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
-<br/>
-<div id="viewsource"><a href="index.php">Refresh page</a></div>
-</div>
-</body>
-</html>
-```
-
-And now for the final request:
-
-```
-$ curl -u natas4:[REMOVED: NATAS4 PASSWORD] \
-    -H 'Referer: http://natas5.natas.labs.overthewire.org/' \
-    http://natas4.natas.labs.overthewire.org/index.php
-<html>
-<head>
-<!-- This stuff in the header has nothing to do with the level -->
-<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
-<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
-<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
-<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
-<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
-<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
-<script>var wechallinfo = { "level": "natas4", "pass": "[REMOVED: NATAS4 PASSWORD]" };</script></head>
-<body>
-<h1>natas4</h1>
-<div id="content">
-
-Access granted. The password for natas5 is [REMOVED: NATAS5 PASSWORD]
-<br/>
-<div id="viewsource"><a href="index.php">Refresh page</a></div>
-</div>
-</body>
-</html>
-```
-
-There it is: `Access granted` and the `natas5` password (removed).
+There it is: `Access granted` and the `natas6` password (removed).
 
 ## Key Takeaways
 
-- HTTP requests contain headers that can be manipulated
-- Browsers can resend requests but in Firefox some headers are apparently off
-  limits
-- The `curl` command is a valuable tool, especially if a group of requests need
-  to be scripted
+- HTTP responses contain headers that can include cookies
+- Cookies can be manipulated by the user, so they should never contain sensitive
+  data
 - Web servers should always be suspicious about any headers or data being sent
   by the user
 
 ## Beyond the Challenge
 
 It's always a good idea to think about other solutions. While there are numerous
-other tools that could be used to solve this challenge, `curl` is fairly common
-and good to learn. Perhaps other browsers allow editing the `Referer` header?
+other tools that could be used to solve this challenge, doing it in the browser
+Developer Tools doesn't require anything too fancy.

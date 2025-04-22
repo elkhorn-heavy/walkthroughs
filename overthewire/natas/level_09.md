@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 9
+# OverTheWire - Natas - Level 10
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
@@ -7,20 +7,19 @@ security skills. From their website:
 
 ## Challenge Overview
 
-After discovering the `natas8` password in the previous challenge, it can be
-used to log into http://natas8.natas.labs.overthewire.org:
+After discovering the `natas9` password in the previous challenge, it can be
+used to log into http://natas9.natas.labs.overthewire.org:
 
 ![The Index Page](images/level_09/00_index_page.png)
 
 ## Initial Analysis
 
-This looks exactly the same as [Level 7](./level_07.md), but it's unlikely that
-it will be the same solution. The web page has no instructions, just a prompt:
+The web page has no instructions, just a prompt:
 
-> Input secret
+> Find words containing:
 
-There's an input box for entering some kind of secret, and a `View sourcecode`
-link that seems like a hint.
+There's an input box for entering the "words", whatever "words" are. There is
+also a `View sourcecode` link that seems like a hint.
 
 ## Approach Strategy
 
@@ -37,154 +36,83 @@ passwords are censored, but the PHP code for the page is shown:
 Some formatting and comments help to understand what this PHP code is doing:
 
 ```php
-// This is the secret that has been encoded using the "encodeSecret" function.
-$encodedSecret = "3d3d516343746d4d6d6c315669563362";
+// Initialize the "$key" variable to the empty string.
+$key = "";
 
-// Function that can be called with a secret, and returns the encoded version of
-// that secret.
-function encodeSecret($secret) {
-  // The algorithm to encode the secret
-  //  1. do a base64 encoding of the secret
-  //  2. do a string reversal of the result of step 1
-  //  3. do a binary to hexadecimal conversion of the result of step 2
-  return bin2hex(strrev(base64_encode($secret)));
+// The "$_REQUEST" is all the input parameters in the HTTP request. So this will
+// check to see if the "needle" parameter is defined. The form on this page has
+// an input named "needle", so this checks if the user has submitted a value.
+if (array_key_exists("needle", $_REQUEST)) {
+  // If the user put a value into the input box, then set "$key" to that value.
+  $key = $_REQUEST["needle"];
 }
 
-// The $_POST array is all the values that were submitted in the form. Does it
-// include "submit", the Submit Query button? In other words, is this page being
-// displayed after the form was submitted? If so then print some extra text.
-if (array_key_exists("submit", $_POST)) {
-  // Does the encoded version of the inputted secret match the previously
-  // encoded value stored in "encodedSecret"?
-  if (encodeSecret($_POST['secret']) == $encodedSecret) {
-    // The secret matches - print the next password.
-    print "Access granted. The password for natas9 is <censored>";
-  } else {
-    // The secret does not match.
-    print "Wrong secret";
-  }
+// If the "$key" variable has a value - that is, it was entered by the user -
+// then run the passthru command.
+if ($key != "") {
+  // Run the "grep" command in case-insensitive ("-i") mode to look for the
+  // value of "$key" in the file "dictionary.txt". Print the output of the grep
+  // command.
+  passthru("grep -i $key dictionary.txt");
 }
 ```
 
-Even with the added comments, this is going to require some explanation.
+This code is pretty good, but it doesn't have anything to do with passwords. It
+just looks up words in a dictionary and prints anything that matches. Entering
+the word `hacker` and clicking the `Search` button displays:
 
-### Hashed Passwords
+![Search for Hacker](images/level_09/02_hacker_search.png)
 
-Login systems (also called authentication systems) store usernames and passwords
-(which are also called credentials). To log into these systems, the user
-enters the username and password, and the system checks that they match what was
-previously stored in a file or database.
+If there are no secrets or passwords or anything else in this code, then what is
+the solution to the challenge? All this code appears to do is print out words
+from a dictionary file. The answer is that the `passthru` command is not
+"sanitizing" the input from the user. User input should never be trusted!
 
-This is a simplified view of things: it is a bad security practice to store
-passwords in their "plain text" form. The reason for this is that if someone was
-able to read the file or database containing the credentials, they would then be
-able to log in as any user.
+This code runs the command `grep -i $key dictionary.txt` on the command line,
+with the value of `$key` supplied by the user. If the user submits the word
+`hacker` then the command is:
 
-When a secure login system stores passwords, it stores an encoded (or "hashed") version of the password. It is critical that the function used to encode a
-password is "one way". That means that once the password is hashed, there is no
-way to retrieve the original password from the hashed value.
-
-Back to the code on this page: the secret has been encoded and then stored in
-the source code. When the user enters a value, it is encoded in the same way and
-then compared to the encoded secret. The problem is that the encoding function
-is not one way. Each of the three functions used to encode the secret can be
-reversed. Since the encoded secret is stored on the web page, the original
-secret can be found with a little effort.
-
-### Decoding the Secret
-
-The function used to encode the secret calls three other functions:
-
-```php
-function encodeSecret($secret) {
-  return bin2hex(strrev(base64_encode($secret)));
-}
+```
+$ grep -i hacker dictionary.txt
 ```
 
-These functions are chained together, with the output of one function acting as
-the input to the next function. The order of operations is:
+A sneaky user can exploit this command. What if the input was
+`hacker dictionary.txt; cat /etc/natas_webpass/natas10; grep -i hacker`? When
+the web page runs the `passthru` command, this input becomes three commands:
 
-1. Send `$secret` to the `base64_encode` function. This function converts any
-   string, including binary, into a string consisting only of the 64 characters
-   `a` through `z`, `A` through `Z`, `0` through `9`, `/`, and `+` (the `=`
-   character is also used at the end if padding is needed)
-2. Take the output of step 1 as the input to `strrev`. This function reverses a
-   string, so `abcdef` becomes `fedcba`.
-3. Take the output of step 2 as the input to `bin2hex`. This function takes
-   binary data and converts it to hexadecimal.
-
-In PHP the opposite of `base64_encode` is `base64_decode`. The opposite of the
-`strrev` function is itself: `strrev(strrev("abcdef")) = "abcdef"`. The opposite
-of the `bin2hex` function is `hex2bin`. These functions also need to be run in
-the opposite order, so the decoding function is:
-
-```php
-<?
-function decodeSecret($hashedSecret) {
-  return base64_decode(strrev(hex2bin($hashedSecret)));
-}
-
-// The encoded secret taken from the page source
-$encodedSecret = "3d3d516343746d4d6d6c315669563362";
-
-print("The decoded secret is: " . decodeSecret($encodedSecret))
-?>
+```
+$ grep -i hacker dictionary.txt; cat /etc/natas_webpass/natas10; grep -i hacker dictionary.txt
 ```
 
-This is great in theory, but how to actually run the code? One way is to install
-PHP (what year is it?!) but a quick online search says that https://onlinephp.io
-provides a sandbox for trying out PHP code:
-
-![PHP Interpreter](images/level_09/02_php_interpreter.png)
-
-1. Paste the code into the `PHP Sandbox`
-2. Click the `Execute Code` button
-3. The output of the code appears in the result box (secret removed)
-
-Now this secret can be used in the original web page:
+Now it looks for "hacker", then prints the `natas10` password, then looks for
+"hacker" again. Trying this out:
 
 ![The Password](images/level_09/03_password.png)
 
-There it is: the `natas9` password (removed).
+There it is: the `natas10` password (removed).
 
 ## Key Takeaways
 
-- It's important to never store plain text passwords or secrets
-- If passwords or secrets are stored as hashed values, the hashing function must
-  be one way
-- Even if a password or secret is hashed, if possible it should never be visible
-  to the user
+- It's important to never trust user input
+- It's dangerous to allow user input in commands that execute shell commands
 
 ## Beyond the Challenge
 
-It's always a good idea to think about other solutions. The unix system provides
-many commands that manipulate text. To turn this solution into a shell script,
-the three functions need to be reproduced using shell commands.
+It's always a good idea to think about other solutions. What is a shorter input
+string?
 
-The `hex2bin` function can be reproduced using the `xxd` command that was
-introduced in [Bandit 13](../bandit/level_13.md). This function converts binary
-to hexadecimal, but the `-r` flag reverses it to convert hexadecimal to binary.
-The `-p` flag is used to print the output as plain hex:
+The example input above produces good output for demonstrating the example. It
+can be shortened by:
 
-```
-$ echo -n 3d3d516343746d4d6d6c315669563362 | xxd -r -p
-==QcCtmMml1ViV3b
-```
+1. Doing something short to finish the `grep` command
+2. Printing the password
+3. Commenting out the remainder of the command.
 
-This is still encoded and not human readable, but those `=` signs look like base
-64 padding, which is promising. Next to reverse the string using `rev`:
+The input `qqq *; cat /etc/natas_webpass/natas10 #` would search for an unlikely
+string in all the current directory's files (which possibly could print a lot of
+garbage), and then print the password. The remainder of the command in the
+`passthru` code is commented out. The command that is run in `passthru` is:
 
 ```
-$ echo -n 3d3d516343746d4d6d6c315669563362 | xxd -r -p | rev
-b3ViV1lmMmtCcQ==
+$ grep -i qqq *; cat /etc/natas_webpass/natas10 #dictionary.txt
 ```
-
-This is indeed the reverse of the previous output, so `rev` is the correct
-command here. Next is to decode the base 64 using `base64 -d`:
-
-```
-$ echo -n 3d3d516343746d4d6d6c315669563362 | xxd -r -p | rev | base64 -d
-[REMOVED: DECODED SECRET]
-```
-
-Done!

@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 2
+# OverTheWire - Natas - Level 3
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
@@ -7,8 +7,8 @@ security skills. From their website:
 
 ## Challenge Overview
 
-After discovering the `natas1` password in the previous challenge, it can be
-used to log into http://natas1.natas.labs.overthewire.org:
+After discovering the `natas2` password in the previous challenge, it can be
+used to log into http://natas2.natas.labs.overthewire.org:
 
 ![The main page](images/level_02/00_main_page.png)
 
@@ -16,36 +16,55 @@ used to log into http://natas1.natas.labs.overthewire.org:
 
 The web page instructions are:
 
-> You can find the password for the next level on this page, but rightclicking
-> has been blocked!
+> There is nothing on this page
 
-So the context menu in the browser has been disabled. However, the Developer
-Tools probably still work.
+Very interesting, but there must be _something_ somewhere.
 
 ## Approach Strategy
 
-1. Use the Developer Tools to look at the page source to see what is there
+1. Use "View Page Source" to look for the password
 
 ## Step-by-Step Solution
 
-Browsers have "Developer Tools" that can be used to look at the source for a web
-page. These tools are also called the "F12 Tools" as the `F12` key is used to
-run them. Note that the password has been removed in this image:
+Browsers provide a way to look at the "source code" of a web page. For example
+in Firefox, right-clicking anywhere on a page brings up a context menu that
+includes an item to "View Page Source":
 
-![Developer Tools (password removed)](images/level_02/01_developer_tools.png)
+![The Firefox Context Menu](images/level_02/01_context_menu.png)
+
+The page source is the HTML that makes up the page. The current `natas2`
+password for "WeChall" has been removed in this image, but that's not the
+password that is needed:
+
+![The Page Source](images/level_02/02_view_source.png)
+
+The comment at the top in green that says that the header information can be
+ignored. That's nice of the challenge developer to make this a little easier.
+The page also includes an `<img>` tag at the bottom:
+
+![The Page Source Image](images/level_02/03_view_source_img.png)
+
+The image on the page doesn't appear to be of interest. However, it is in a
+directory called `files`. Perhaps there is something else in that directory?
+Appending `/files` to the original web page url results in
+http://natas2.natas.labs.overthewire.org/files, which provides a nice list of
+what is in the directory, including something called `users.txt`:
+
+![The /files Directory](images/level_02/04_files_directory.png)
+
+Clicking the `users.txt` link will display the file. It contains pairs of
+usernames and passwords, including the `natas3` user (password removed):
+
+![The users.txt file](images/level_02/05_users_file.png)
 
 ## Key Takeaways
 
-HTML comments contain data that is not displayed on a web page. These comments
-can be a valuable source of information and can be displayed with the Developer
-Tools.
+- Reading the source code of a web page can uncover directories of interest
+- Misconfigured web servers can provide directory listings and/or sensitive
+  files
 
 ## Beyond the Challenge
 
-It's always a good idea to think about other solutions. In this challenge some
-options are:
-
-- Right click and select the View Page Source menu, as this does actually work
-  in Firefox 137. Whatever was used to prevent the context menu is no longer
-  working
-- The page could be saved locally and then the source can be viewed
+It's always a good idea to think about other solutions. In this challenge
+another solution is to use the Developer Tools instead of the View Page Source
+function.
