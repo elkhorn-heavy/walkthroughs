@@ -14,7 +14,7 @@ used to log into http://natas8.natas.labs.overthewire.org:
 
 ## Initial Analysis
 
-This looks exactly the same as [Level 7](./level_07.md), but it's unlikely that
+This looks exactly the same as [Level 6](./level_06.md), but it's unlikely that
 it will be the same solution. The web page has no instructions, just a prompt:
 
 > Input secret
