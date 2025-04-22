@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 12
+# OverTheWire - Natas - Level 11
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
@@ -294,7 +294,7 @@ print("The key is: " . $key . "\n");
 ?>
 ```
 
-Now to actually run the code: in [Level 9](./level_09.md) a quick online search
+Now to actually run the code: in [Level 8](./level_08.md) a quick online search
 was used to find https://onlinephp.io, which provides a sandbox for running PHP
 code:
 

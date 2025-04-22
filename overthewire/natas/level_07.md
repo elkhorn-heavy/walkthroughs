@@ -1,4 +1,4 @@
-# OverTheWire - Natas - Level 8
+# OverTheWire - Natas - Level 7
 
 [OverTheWire](https://overthewire.org) offers a series of "wargames" that teach
 security skills. From their website:
