@@ -151,7 +151,7 @@ appears to work correctly:
 - a default cookie is created on the first page load
 - if the user enters a valid RGB colour string, the cookie is read, updated, and
   saved
-- at no time is the `showpassword` value of the cookie ever set
+- at no time is the `showpassword` value of the cookie ever changed
 
 All of this code looks secure. That leaves the final function: `xor_encrypt`.
 
@@ -201,8 +201,8 @@ function xor_encrypt($in) {
 ```
 
 This function is implementing a one-time pad (OTP). If one-time pads are used
-correcly, they are perfectly secure and cannot be broken. However, one-time pads
-do have strict limitations:
+correctly, they are perfectly secure and cannot be broken. However, one-time
+pads do have strict limitations:
 
 1. The key must be at least as long as the plaintext
 2. It is a _one_ time pad - the key must never be re-used
@@ -213,7 +213,7 @@ unknown. It is possible that it is long enough that the modular arithmetic used
 to "wrap" the key is never used.
 
 For the second limitation, `$key` is being re-used every time the user submits a
-new colour code. This breaks the security of the OTP.
+new colour code. This breaks some of the security of the OTP.
 
 For the third limitation, both the plaintext (`$defaultdata`) and the ciphertext
 (the cookie) are known. This means that the key can be retrieved. To understand
@@ -242,11 +242,11 @@ both are true. The truth table for XOR is:
 | true  | true  | false |
 
 This leads to some really interesting properties of XOR. In the code, both the
-`loadData` and the `saveData` use the `xor_encrypt` function - but isn't one
-decrypting?! Plaintext XORed with a key produces the ciphertext, but the
-ciphertext can then be decrypted by XORing it again with the same key. XOR is
-both an encrypting and decrypting function. This leads to some very interesting
-math. For encryption and decryption,
+`loadData` and the `saveData` functions use the `xor_encrypt` function - but
+isn't one decrypting?! Plaintext XORed with a key produces the ciphertext, but
+the ciphertext can then be decrypted by XORing it again with the same key. XOR
+is both an encrypting and decrypting function. This leads to some very
+interesting math. For encryption and decryption,
 
 PLAINTEXT ^ KEY = CIPHERTEXT and CIPHERTEXT ^ KEY = PLAINTEXT
 
@@ -254,7 +254,7 @@ it is also true that
 
 PLAINTEXT ^ CIPHERTEXT = KEY
 
-This is the "key" to solving this challenge
+This is the "key" (sorry, not sorry) to solving this challenge!
 
 ### The Solution
 
@@ -353,9 +353,9 @@ The manipulated cookie is: HmYkBwozJw4WNyAAFyB1VUc9MhxHaHUNAic4Awo2dVVHZzEJAyIxC
 
 #### Step 3: Insert the Cookie
 
-Now a cookie has been created with a `showpassword` value of `yes`. In the
-browser Developer Tools, the value of the cookie can be double-clicked, and the
-new cookie can be pasted in:
+Now a cookie value has been created with a `showpassword` value of `yes`. In the
+browser Developer Tools, the existing value of the cookie can be double-clicked,
+and the new cookie value can be pasted in:
 
 ![Pasted Cookie](images/level_12/04_pasted_cookie.png)
 
@@ -365,8 +365,9 @@ It's known from examining the code on the page that when the user clicks the
 `Set color` button, if the RGB colour code is valid then:
 
 1. The cookie is read from the browser
-2. The colour code is updated
-3. The page is redisplayed
+2. The colour code part of the cookie is updated
+3. The cookie is saved to the browser
+4. The page is redisplayed
 
 All that is needed now is to click the button:
 
