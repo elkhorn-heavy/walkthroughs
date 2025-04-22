@@ -37,7 +37,7 @@ link that seems like a hint.
 Clicking the `View sourcecode` link shows the source code for the web page. The
 passwords are censored, but the PHP code for the page is shown:
 
-![Index Source Code](images/level_11/01_index_source_code.png)
+![Index Source Code](images/level_10/01_index_source_code.png)
 
 This code is very similar to the previous challenge. Some formatting and
 comments help to understand what this PHP code is doing:
@@ -75,7 +75,7 @@ This code is pretty good, but it doesn't have anything to do with passwords. It
 just looks up words in a dictionary and prints anything that matches. Entering
 the word `hacker` and clicking the `Search` button displays:
 
-![Search for Hacker](images/level_11/02_hacker_search.png)
+![Search for Hacker](images/level_10/02_hacker_search.png)
 
 If there are no secrets or passwords or anything else in this code, then what is
 the solution to the challenge? All this code appears to do is print out words
@@ -85,7 +85,7 @@ This filter can be tried by tweaking the input from the previous challenge to
 print the `natas11` password for this level:
 `hacker dictionary.txt; cat /etc/natas_webpass/natas11; grep -i hacker`:
 
-![Illegal Character](images/level_11/03_illegal_character.png)
+![Illegal Character](images/level_10/03_illegal_character.png)
 
 This is expected as the character `;` is no longer allowed.
 
@@ -107,7 +107,7 @@ $ grep -i . /etc/natas_webpass/natas11 # dictionary
 This looks like it will work! Every non-empty line of the `natas11` file will be
 printed and then the `#` comment throws away the remainder of the command line:
 
-![The Password](images/level_11/04_password.png)
+![The Password](images/level_10/04_password.png)
 
 There it is: the `natas11` password (removed).
 
