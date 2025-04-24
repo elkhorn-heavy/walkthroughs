@@ -72,7 +72,7 @@ For this type of SQL injection, it is very helpful to know what SQL query is
 executed:
 
 ```php
-SELECT * from users where username=\"" . $_REQUEST["username"] . "\" and password=\"" . $_REQUEST["password"] . "\"
+"SELECT * from users where username=\"" . $_REQUEST["username"] . "\" and password=\"" . $_REQUEST["password"] . "\""
 ```
 
 Entering the username `somebody` and password `secret`, the SQL executed is:
