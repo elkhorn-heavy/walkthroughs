@@ -42,7 +42,7 @@ if (array_key_exists("username", $_REQUEST)) {
   mysqli_select_db($link, 'natas15');
 
   // Set up the SQL query used to check if the username is in the database.
-  $query = "SELECT * from users where username=\"".$_REQUEST["username"]."\"";
+  $query = "SELECT * from users where username=\"" . $_REQUEST["username"] . "\"";
 
   // Some debug functionality to print the query before running it. This could
   // be enabled using the Developer Tools to add a hidden "debug" element to the
