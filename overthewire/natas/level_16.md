@@ -71,7 +71,6 @@ if ($key != "") {
 }
 ```
 
-0
 This code is pretty good, but it doesn't have anything to do with passwords. It
 just looks up words in a dictionary and prints anything that matches. Entering
 the word `hacker` and clicking the `Search` button displays:
