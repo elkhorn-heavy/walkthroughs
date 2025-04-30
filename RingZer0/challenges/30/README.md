@@ -128,7 +128,7 @@ The hash value can be copied from the page and then attacked "offline" without
 involving the web server. It's a good idea to copy the `sha1.js` file from the
 server, just in case it is flawed in some way (purposely or otherwise).
 
-A JavaScript tool [hash_password.js](hash_password.js) can be written:
+A JavaScript tool [hash_password.js](https://github.com/elkhorn-heavy/walkthroughs/blob/main/RingZer0/challenges/30/hash_password_file.js) can be written:
 
 ```javascript
 // Produce a SHA-1 hash for a given password. Uses the sha1.js file used by
@@ -207,7 +207,7 @@ guesses. Maybe it's just a common English word?
 
 ### Using a Dictionary
 
-Write another tool, [hash_password_file.js](hash_password_file.js) to compare
+Write another tool, [hash_password_file.js](https://github.com/elkhorn-heavy/walkthroughs/blob/main/RingZer0/challenges/30/hash_password_file.js) to compare
 all the words in a dictionary file:
 
 ```javascript
