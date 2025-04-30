@@ -65,8 +65,8 @@ Why this "username" input works:
 
 - `'` closes the username string.
 - ` OR true` ensures the condition is always true.
-- `-- ` with an important trailing space turns the rest (the password check)
-  into a comment. The trailing space is specific to MySQL databases.
+- `-- ` turns the rest (the password check) into a comment. The trailing space
+  is very important and specific to MySQL databases.
 
 So the final SQL query run by the website is:
 
@@ -85,6 +85,6 @@ and the flag (obscured) is displayed!
 ## Security Considerations
 
 - Always sanitize user input before using it.
-- Unsanitized user input can be used to alter the behaviour of an SQL query.
+- Unsanitized input can be used to alter the behaviour of an SQL query.
 - SQL injection attacks are all about guessing what query is being run by the
   server, and how to manipulate it.
