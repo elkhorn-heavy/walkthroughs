@@ -1,17 +1,31 @@
 # Client-side validation is bad!
 
+- Write-up by: ElkhornHeavy
 - Category: JavaScript
 - Points: 1
 
-## The page:
+## The Page
 
-Login box. Username, password. Green button. No promises.
+![Index Page](00_index_page.png)
 
-Looked at the page source - saw this:
+Looks like a standard login form with Username and Password inputs, plus a
+Login button.
+
+Right-clicking the page and selecting `View Page Source` from the context menu
+brings up the source.
+
+### The Form
+
+The first important part of the source is the form component containing the
+inputs and Login button. This all looks very standard with no big surprises.
+Some formatting and comments make it a bit more clear:
 
 ```html
+<!-- The "action" is blank, so the form logic is probably in Javascript on the
+web page itself. -->
 <form action="" method="post">
   <label>Username</label>
+  <!-- The input for the username, with an "id" value of "cuser" -->
   <input
     class="form-control"
     type="text"
@@ -19,7 +33,9 @@ Looked at the page source - saw this:
     id="cuser"
     placeholder="Username"
   />
+
   <label>Password</label>
+  <!-- The input for the password, with an "id" value of "cpass" -->
   <input
     class="form-control"
     type="password"
@@ -27,6 +43,8 @@ Looked at the page source - saw this:
     id="cpass"
     placeholder="Password"
   />
+
+  <!-- The button to submit the form, with a "class" value of "c_submit" -->
   <input
     type="submit"
     style="margin-top: 12px;"
@@ -36,15 +54,25 @@ Looked at the page source - saw this:
 </form>
 ```
 
-Nothing happening. Dead HTML. The trap isn't in the form - it's behind it.
+### The Code
 
-Scrolling down, wham:
+Further down the page is the important part: the JavaScript that checks the
+username and password. Some formatting and comments make it a bit more clear:
 
 ```javascript
+// The $() syntax is jQuery, a library for making it easier to write JavaScript
+// that runs in the browser. It start with saying that when the Login (c_submit)
+// button is clicked thenn do the code within the following clause.
 $(".c_submit").click(function (event) {
+  // Prevent the default action of the form: submission to the server.
   event.preventDefault();
+
+  // Read the username and password from the form fields
   var u = $("#cuser").val();
   var p = $("#cpass").val();
+
+  // Check that the username is "admin" and the password is the result of what
+  // is returned by String.fromCharCode().
   if (
     u == "admin" &&
     p ==
@@ -69,10 +97,13 @@ $(".c_submit").click(function (event) {
         101
       )
   ) {
+    // Username and password match: call the server, which displays the flag if
+    // the password is correct.
     if (document.location.href.indexOf("?p=") == -1) {
       document.location = document.location.href + "?p=" + p;
     }
   } else {
+    // Username or password are incorrect, so display an error message.
     $("#cresponse").html(
       "<div class='alert alert-danger'>Wrong password sorry.</div>"
     );
@@ -80,56 +111,75 @@ $(".c_submit").click(function (event) {
 });
 ```
 
-That's it. **That's all of it**.
+There flaws in this page are:
 
-The lock, the key, the map to the house, all taped to the front door.
-
-## How it works
-
-- Form tries to submit? Nope. `preventDefault()` blocks the exit.
-
-- Instead, it checks the username - must be `admin`.
-
-- It builds a password on the fly using `String.fromCharCode()`. ASCII soup.
-
-- If your inputs match their expectations, it hacks the URL and adds `?p=your_password_here`.
-
-- If not? Flashing red "wrong password" - carnival buzzer sound.
+1. The username `admin` is stored in the web page itself, so it is visible to
+   anyone who looks at the source code
+2. The password is hidden by the `String.fromCharCode()` function, but again it
+   is visible to anyone who looks at the source code
+3. Checking the username and password is done in the web page code. This is a
+   big mistake. Checking credentials should be done in the web server, so that
+   it is not visible to the user.
 
 ## Decoding the Secret
 
-Copy-pasted the numbers straight into Node:
+The solution to this challenge is to figure out the `String.fromCharCode()`
+function that is hiding the password. The Mozilla Developer Network (MDN)
+documentation is a great place for all things JavaScript. It says:
+
+> The String.fromCharCode() static method returns a string created from the
+> specified sequence of UTF-16 code units.
+
+As with most documentation, a certain level of prior knowledge is needed, and
+this is no exception: what is a "UTF-16 code unit"? That's not very helpful
+information. The simple (and limited, and not entirely correct) explanation is
+that it can be ASCII values. ASCII maps letters to number values. For example,
+the letter `A` has a decimal ASCII value of `65`, or `0x41` in hexadecimal.
+
+In other words, the password has been encoded to number values, but those values
+are easily reversed back to the letters they represent. The password is encoded
+to:
+
+> 74,97,118,97,83,99,114,105,112,116,73,115,83,101,99,117,114,101
+
+These numbers could be looked up one by one to get the letters they represent.
+For a small set of numbers this is OK, but it's always better to automate things
+whenever possible. Thankfully the `String.fromCharCode` automates the process!
+
+The first step is starting the browser Developer Tools, which are also called
+the `F12`tools, as the `F12` key in the browser starts them:
+
+![Developer Tools](01_developer_tools.png)
+
+The image above shows the `Console` tab of the Developer Tools. Pasting the
+`String.fromCharCode()` function into the console will run the function and
+print the password! (the password has been obscured in the screen shot)
+
+![Console Tab](02_console_tab.png)
+
+## Security Considerations
+
+- Never store sensitive information in the code for web pages. Users can read
+  the code, and they will.
+
+- Secrets encoded with reversible operations can and will be reversed.
+
+- Credential validation should be done on the server, not on the client.
+
+- Never assume your users are friendly.
+
+## Beyond the Challenge
+
+It's always a good idea to find alternative solutions to challenges. After all,
+the goal is to learn, and learning new tools and techniques is important.
+
+The browser's Developer Tools console is only one place to run JavaScript code.
+If the code is complex, it's often better to use something like Node.js to run
+the code. Short snippets of code can be run on the command line with the `-e`
+flag:
 
 ```
-$ node -e 'console.log(String.fromCharCode(74,97,118,97,83,99,114,105,112,116,73,115,83,101,99,117,114,101))'
-JavaScriptIsSecure
+$ node -e "console.log(String.fromCharCode(74,97,118,97,83,99,114,105,112,116,73,115,83,101,99,117,114,101))"
+[REMOVED: CHALLENGE PASSWORD]
+$
 ```
-
-Right there in the open.
-
-Right there like a wallet sitting on the curb.
-
-## What Went Wrong (and Why It Matters)
-
-- **Never validate critical credentials client-side.** Ever.
-
-- **Never store secrets in reversible JavaScript operations.** ASCII codes are not encryption.
-
-- **Never assume people won’t look at your source.** They will.
-
-- **Never assume your users are friendly.** They're not - not in CTF land.
-
-Client-side validation is theater.
-Server-side validation is law.
-
-## Closing Thoughts
-
-This wasn’t security. This was **security kabuki**.
-
-A smiling mask over hollow bones.
-
-A fairy tale for the bored and the reckless.
-
-Punch through it, laugh, move on.
-
-Challenge complete.
