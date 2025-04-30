@@ -61,8 +61,8 @@ username and password. Some formatting and comments make it a bit more clear:
 
 ```javascript
 // The $() syntax is jQuery, a library for making it easier to write JavaScript
-// that runs in the browser. It start with saying that when the Login (c_submit)
-// button is clicked then do the code within the clause that follows.
+// that runs in the browser. It starts with saying that when the Login
+// (c_submit) button is clicked then do the code within the clause that follows.
 $(".c_submit").click(function (event) {
   // Prevent the default action of the form: do not submit to the server.
   event.preventDefault();
@@ -111,30 +111,21 @@ $(".c_submit").click(function (event) {
 });
 ```
 
-There flaws in this page are:
+## Solving the Challenge
 
-1. The username `admin` is stored in the web page itself, so it is visible to
-   anyone who looks at the source code
-2. The password is hidden by the `String.fromCharCode()` function, but again it
-   is visible to anyone who looks at the source code
-3. Checking the username and password is done in the web page code. This is a
-   big mistake. Checking credentials should be done in the web server, so that
-   nothing is visible to the user.
-
-## Decoding the Secret
-
-The solution to this challenge is to figure out the `String.fromCharCode()`
-function that is hiding the password. The Mozilla Developer Network (MDN)
-documentation is a great place for all things JavaScript. It says:
+The solution to this challenge is to figure out the value returned by the
+`String.fromCharCode()` function that is hiding the password. The Mozilla
+Developer Network (MDN) documentation is a great place for all things
+JavaScript. It says:
 
 > The String.fromCharCode() static method returns a string created from the
 > specified sequence of UTF-16 code units.
 
 As with most documentation, a certain level of prior knowledge is needed, and
-this is no exception: what is a "UTF-16 code unit"? That's not very helpful
-information. The simple (and limited, and not entirely correct) explanation is
-that it can be ASCII values. ASCII maps letters to number values. For example,
-the letter `A` has a decimal ASCII value of `65`, or `0x41` in hexadecimal.
+this is no exception: what is a "UTF-16 code unit"? That's not a very helpful
+explanation! The simple (and _limited_, and _not entirely correct_) explanation
+is that it can be ASCII values. ASCII maps letters to number values. For
+example, the letter `J` has a decimal ASCII value of `74`.
 
 In other words, the password has been encoded to number values, but those values
 are easily reversed back to the letters they represent. The password is encoded
@@ -162,11 +153,8 @@ print the password (Note: the password has been obscured in the screen shot).
 
 - Never store sensitive information in the browser's code for web pages. Users
   can read the code, and they will.
-
 - Secrets encoded with reversible operations can and will be reversed.
-
 - Credential validation should be done on the server, not on the client.
-
 - Never assume your users are friendly.
 
 ## Beyond the Challenge

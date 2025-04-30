@@ -16,8 +16,8 @@ brings up the source.
 ### The Form
 
 The first important part of the source is the form component containing the
-inputs and Login button. This all looks very standard with no big surprises.
-Some formatting and comments make it a bit more clear:
+input and Login button. This all looks very standard with no big surprises. Some
+formatting and comments make it a bit more clear:
 
 ```html
 <!-- The "action" is blank, so the form logic is probably in Javascript on the
@@ -46,12 +46,12 @@ web page itself. -->
 ### The Code
 
 Further down the page is the important part: the JavaScript that checks the
-username and password. Some formatting and comments make it a bit more clear:
+password. Some formatting and comments make it a bit more clear:
 
 ```javascript
 // The $() syntax is jQuery, a library for making it easier to write JavaScript
-// that runs in the browser. It start with saying that when the Login (c_submit)
-// button is clicked then do the code within the clause that follows.
+// that runs in the browser. It starts with saying that when the Login
+// (c_submit) button is clicked then do the code within the clause that follows.
 $(".c_submit").click(function (event) {
   // Prevent the default action of the form: do not submit to the server.
   event.preventDefault();
@@ -99,7 +99,7 @@ much harder to break using current computing power.
 Although there's a solution to this challenge, there are many paths that need to
 be explored before getting to the end.
 
-### Is it SHA-1
+### Is it SHA-1?
 
 Skepticism is important! Although the script says that it's using SHA-1, is it
 really? The page source shows that the file `sha1.js` is imported, so it's a
@@ -115,7 +115,6 @@ produces the same SHA-1 hash. There are two flaws with this approach, though:
 
 1. It would take significant time / money / effort to come up with a collision.
    This seems like an excessive solution for a 1 point challenge!
-
 2. Perhaps a collision could be found, for instance if the password was "secret"
    but the word "pencil" produced the same hash. The web page sends the password
    to the web server for verification, and there's a chance that the backend is
@@ -300,10 +299,7 @@ itself doesn't _feel_ right:
 
 - Never store sensitive information in the browser's code for web pages. Users
   can read the code, and they will.
-
 - Hashes that are publicly stored can be brute-forced without involving the web
   server.
-
 - Common passwords are sitting ducks when they are easy to check.
-
 - Never assume your users are friendly.
