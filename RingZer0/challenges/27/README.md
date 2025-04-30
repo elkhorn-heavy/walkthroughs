@@ -4,7 +4,7 @@
 - Category: JavaScript
 - Points: 1
 
-## The Page
+## The Challenge
 
 ![Index Page](00_index_page.png)
 
@@ -62,17 +62,17 @@ username and password. Some formatting and comments make it a bit more clear:
 ```javascript
 // The $() syntax is jQuery, a library for making it easier to write JavaScript
 // that runs in the browser. It start with saying that when the Login (c_submit)
-// button is clicked thenn do the code within the following clause.
+// button is clicked then do the code within the clause that follows.
 $(".c_submit").click(function (event) {
-  // Prevent the default action of the form: submission to the server.
+  // Prevent the default action of the form: do not submit to the server.
   event.preventDefault();
 
-  // Read the username and password from the form fields
+  // Read the username and password from the form inputs.
   var u = $("#cuser").val();
   var p = $("#cpass").val();
 
-  // Check that the username is "admin" and the password is the result of what
-  // is returned by String.fromCharCode().
+  // Check that the username is "admin" and the password is the result of
+  // whatever is returned by this call to String.fromCharCode().
   if (
     u == "admin" &&
     p ==
@@ -119,7 +119,7 @@ There flaws in this page are:
    is visible to anyone who looks at the source code
 3. Checking the username and password is done in the web page code. This is a
    big mistake. Checking credentials should be done in the web server, so that
-   it is not visible to the user.
+   nothing is visible to the user.
 
 ## Decoding the Secret
 
@@ -144,23 +144,24 @@ to:
 
 These numbers could be looked up one by one to get the letters they represent.
 For a small set of numbers this is OK, but it's always better to automate things
-whenever possible. Thankfully the `String.fromCharCode` automates the process!
+whenever possible. Thankfully the `String.fromCharCode` function already
+automates the process!
 
 The first step is starting the browser Developer Tools, which are also called
-the `F12`tools, as the `F12` key in the browser starts them:
+the `F12` tools, as the `F12` key in the browser starts them:
 
 ![Developer Tools](01_developer_tools.png)
 
 The image above shows the `Console` tab of the Developer Tools. Pasting the
 `String.fromCharCode()` function into the console will run the function and
-print the password! (the password has been obscured in the screen shot)
+print the password (Note: the password has been obscured in the screen shot).
 
 ![Console Tab](02_console_tab.png)
 
 ## Security Considerations
 
-- Never store sensitive information in the code for web pages. Users can read
-  the code, and they will.
+- Never store sensitive information in the browser's code for web pages. Users
+  can read the code, and they will.
 
 - Secrets encoded with reversible operations can and will be reversed.
 
