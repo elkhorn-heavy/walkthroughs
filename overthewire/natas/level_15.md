@@ -370,7 +370,7 @@ A binary search, though, splits the possible values in two with each guess:
 - Is it after `j`? [YES]
 - etc.
 
-On average this will take around six guesses to find the value.
+On average this will take 4.7 guesses to find the value.
 
 The code is found in [solution_binary.py](files/level_15/solution_binary.py). It
 finds the password in a little more than 200 HTTP requests.
