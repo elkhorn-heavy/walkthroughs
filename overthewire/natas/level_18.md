@@ -35,7 +35,7 @@ passwords are censored, but the PHP code for the page is shown. It's a lot of
 squirrelly code and too big for a useful screenshot. However, it can be broken
 down piece by piece and simplified to make it understandable:
 
-### isValidAdminLogin
+### `isValidAdminLogin`
 
 ```php
 function isValidAdminLogin() {
@@ -58,7 +58,7 @@ function isValidAdminLogin() {
 }
 ```
 
-### isValidID
+### `isValidID`
 
 ```php
 // Check that the given "id" parameter is a number.
@@ -67,7 +67,7 @@ function isValidID($id) {
 }
 ```
 
-### createID
+### `createID`
 
 ```php
 // Create a numeric ID value between 1 and maxid (640).
@@ -78,7 +78,7 @@ function createID($user) {
 }
 ```
 
-### my_session_start
+### `my_session_start`
 
 This is when the code starts to get complicated and needs some explanation.
 
@@ -112,7 +112,7 @@ that the user cannot alter the data since it's not stored in the browser. So
 when the `admin` session key is set to `0`, there is no way to change it - it is
 hidden away on the server.
 
-### print_credentials
+### `print_credentials`
 
 ```php
 // Straightforward: only if the "admin" session variable is set to 1 is the
