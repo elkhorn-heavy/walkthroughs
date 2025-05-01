@@ -59,10 +59,10 @@ IDs between 1 and 640, but this one looks huge!
 
 ### Session ID Analysis
 
-The first time the form was submitted, the session id is `3535362d61646d696e`.
+The first time the form was submitted, the session ID is `3535362d61646d696e`.
 If the cookie is deleted and the form re-submitted with blank username and
-password, the session id `3336382d`, then `3230322d`, then `3130342d`. There is
-some kind of pattern to these session IDs!
+password, the session ID is `3336382d`, then `3230322d`, then `3130342d`. There
+is some kind of pattern to these session IDs!
 
 Looking at these short session IDs, they consist of:
 
