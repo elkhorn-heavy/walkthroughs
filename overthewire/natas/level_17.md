@@ -166,8 +166,8 @@ It's best to figure out the steps needed using "pseudocode":
    password substring guess
 5. Call the web server with an HTTP request duplicating what happens when the
    form is submitted
-6. Check the response from the web server. It is returns in more than five
-   seconds, the then the next character of the password has been found. For less
+6. Check the response from the web server. If it returns in more than five
+   seconds, then the next character of the password has been found. For less
    than five seconds the password guess was wrong and change to the next
    character
 
