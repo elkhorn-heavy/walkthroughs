@@ -21,7 +21,7 @@ This challenge page has text that says:
 There's a form with a pair of Username and Password input boxes, plus a Login
 button.
 
-There is also a View sourcecode link that seems like a hint.
+There is also a `View sourcecode` link that seems like a hint.
 
 ## Approach Strategy
 
@@ -61,7 +61,7 @@ function isValidAdminLogin() {
 ### isValidID
 
 ```php
-// Check that the given ID parameter is a number.
+// Check that the given "id" parameter is a number.
 function isValidID($id) {
   return is_numeric($id);
 }
@@ -169,26 +169,27 @@ which is probably part of the challenge. To sum it up, though:
 - There is no way in this code to set the `admin` session variable to `1`
 
 It's this last point that is the key to this challenge: the code is solid (if
-messy) so the solution isn't exploiting a logic flaw in the code.
+messy) so there aren't any logic flaws in the code that can be exploited.
 
 ## The Session ID
 
 If the `admin` session variable can't be manipulated, what is in control of the
 attacker? The `PHPSESSID` browser cookie is just a small random number, in the
 range of 1 through 640. By changing the `PHPSESSID` to another value, it is the
-same as logging in as the person who had that session. In other words, it is
+same as logging in as the person who has that session. In other words, it is
 possible to use the session of other users, and with any luck it's possible to
 find a user with `admin` set to `1`.
 
 The `PHPSESSID` could be manipulated through the Developer Tools in the browser,
-but 640 sessions is a lot to check manually. This is something that needs to be automated: and this can be a very big leap for non-developers.
+but 640 session IDs is a lot to check manually. This is something that needs to
+be automated: and this can be a very big leap for non-developers.
 
 ### Automate the Process
 
 The first step is to decide what technology to use. This could be done with a
-shell script and the `curl` command, but it "feels" like it needs a programming
-language. Python is a popular language for "one off" coding, so that's a good
-place to start.
+shell script and the `curl` command - it would be fairly straightforward with
+a `grep` command to look at the responses. However, in previous challenges some
+Python scripts were written, and those scripts can be re-used here.
 
 It's best to figure out the steps needed using "pseudocode":
 
@@ -197,8 +198,9 @@ It's best to figure out the steps needed using "pseudocode":
 2. Loop over each of the 640 PHPSESSID cookies
 3. Call the web server with an HTTP request duplicating what happens when the
    page is displayed
-4. Check the response from the web server. If it contains "You are an admin"
-   then print the response and stop. Otherwise check the next `PHPSESSID` value.
+4. Check the response from the web server. If it contains "You are logged in as
+   a regular user" then continue to the next PHPSESSID. Otherwise print the
+   response and stop (this catches both the admin output as well as errors).
 
 #### Step 1: Credentials
 
@@ -224,7 +226,7 @@ for id in range(1, 640):
 import requests
 
 print(f'Trying PHPSESSID={ id }')
-response = requests.post('http://natas18.natas.labs.overthewire.org/index.php', auth=("natas18", password), cookies={ "PHPSESSID": id })
+response = requests.get('http://natas18.natas.labs.overthewire.org/index.php', auth=("natas18", password), cookies={ "PHPSESSID": id })
 ```
 
 #### Step 4: Response Handling
@@ -248,7 +250,7 @@ password = getpass.getpass(prompt='Enter password for natas18: ')
 for id in range(1, 640):
     #### Step 3: Web Server Request
     print(f'Trying PHPSESSID={ id }')
-    response = requests.post('http://natas18.natas.labs.overthewire.org/index.php', auth=("natas18", password), cookies={ "PHPSESSID": str(id) })
+    response = requests.get('http://natas18.natas.labs.overthewire.org/index.php', auth=("natas18", password), cookies={ "PHPSESSID": str(id) })
 
     #### Step 4: Response Handling
     if 'You are logged in as a regular user' not in response.text:
