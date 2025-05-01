@@ -37,14 +37,11 @@ down piece by piece and simplified to make it understandable:
 
 ### The Uninteresting Functions
 
-- `debug`: print debugging information when the request hasa `debug` parameter
+- `debug`: print debugging information when the request has a `debug` parameter
 - `myclose`: unused, returns `true`
 - `mydestroy`: unused, returns `true`
 - `mygarbage`: unused, returns `true`
 - `myopen`: unused, returns `true`
-
-The first thing to do is open the Developer (F12) Tools in the browser and look
-at the cookies:
 
 ### `myread`
 
@@ -71,8 +68,8 @@ function myread($sid) {
   // Clear the session data for this session with a new array.
   $_SESSION = array();
 
-  // Each line of the file is a space separated key / value pair. Set the
-  // session variables to these pairs.
+  // Each line of the file is a space separated key/value pair. Set the session
+  // variables to these pairs.
   foreach(explode("\n", $data) as $line) {
     $parts = explode(" ", $line, 2);
     if ($parts[0] != "") {
@@ -104,8 +101,8 @@ function mywrite($sid, $data) {
   // Use the same filename as "myread" - nothing tricky going on here.
   $filename = session_save_path() . "/" . "mysess_" . $sid;
 
-  // Reverse the read process: sort the session variable by key and then store
-  // as key / value pairs separated by a space.
+  // Reverse the read process: sort the session variables by key and then store
+  // as key/value pairs separated by a space.
   $data = "";
   ksort($_SESSION);
   foreach($_SESSION as $key => $value) {
@@ -154,7 +151,7 @@ session_set_save_handler(
   "mygarbage");
 session_start();
 
-// The user entered a name in the form, saving it as "name" in the session.
+// The user entered a name in the form, so save it as "name" in the session.
 if (array_key_exists("name", $_REQUEST)) {
   $_SESSION["name"] = $_REQUEST["name"];
 }
@@ -203,11 +200,11 @@ admin 0
 other other
 ```
 
-So if the `name` itself contains a newline, and then a space-separated
+So if the value of the `name` key contains a newline, and then a space-separated
 key/value pair, then when it is deserialized it will get added as a separate key
 in the session.
 
-For example, if the name is "somebody\nadmin 1" then when this gets serialized
+For example, if the name is `somebody\nadmin 1` then when this gets serialized
 the file looks like:
 
 ```
@@ -215,7 +212,7 @@ name somebody
 admin 1
 ```
 
-Then when this is deserialized it becomes two keys in the session:
+Then when this is deserialized it becomes _two_ keys in the session:
 
 - `name`: `somebody`
 - `admin`: `1`
@@ -225,14 +222,16 @@ submitting it to the server:
 
 ![Backslash N Exploit](images/level_20/01_backslash_n.png)
 
-The clicking the `Change name` button causes it to be serialized. Then clicking
+Then clicking the `Change name` button causes it to be serialized. Then clicking
 the `Change name` button a second time causes it to be deserialized:
 
 ![Backslash N Exploit](images/level_20/02_backslash_n_fail.png)
 
-Failure! Maybe it needs `\\n` or `\\\\n`? No luck with those either! If it is
-getting encoded to send to the server, maybe it needs to be encoded as `%0a`,
-but again failure, failure, failure!
+Failure!
+
+Maybe it needs `\\n` or `\\\\n`? No luck with those either! If it is getting
+encoded to send to the server, maybe it needs to be encoded as `%0a`, but again
+failure, failure, failure!
 
 Time to bring in the Developer Tools.
 
@@ -242,27 +241,28 @@ After opening the Developer Tools:
 
 1. Use `somebody\nadmin 1` as the name and click the `Change name` button
 2. Go the `Network` tab of the Developer Tools
-3. Set the request for `index.php`
+3. Select the request for `index.php`
 4. Open the `Request` tab
 5. There it is: the form data being submitted
 
-The browser is very kindly escaping the newline for us! In the normal world this
-is a good thing, but when trying to solve a challenge it's less of a good thing.
+The browser is very kindly escaping the newline! In the normal world this is a
+good thing, but when trying to solve a challenge it's less of a good thing.
 
 Another wonderful thing about the Developer Tools, at least in Firefox, is that
 the `index.php` request can be right-clicked and there is a menu item
 `Edit and Resend`. This brings up the request editor, and at the bottom is the
-body for the request, and the `\` is being encoded as the ASCII `%5C`:
+body for the request, with the `\` being encoded as the ASCII `%5C`:
 
 ![Edit and Resend](images/level_20/04_edit_resend.png)
 
-As the name suggests, this can be edited and resent:
+As the name suggests, this request can be edited to add a newline, and then
+resent to the server:
 
 ![Edited](images/level_20/05_edited.png)
 
-After clicking the "Send" button, the data should be craftily serialized to the
+After clicking the `Send` button, the data should be craftily serialized to the
 file. Then all that is needed is to click the `Change name` button on the form
-to deserialize the data:
+to deserialize the data and set `admin` = `1` in the session:
 
 ![Edited](images/level_20/06_password.png)
 
