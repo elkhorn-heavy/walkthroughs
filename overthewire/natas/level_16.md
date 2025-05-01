@@ -80,7 +80,7 @@ the word `hacker` and clicking the `Search` button displays:
 If there are no secrets or passwords or anything else in this code, then what is
 the solution to the challenge? All this code appears to do is print out words
 from a dictionary file. The `$key` used in the `passthru` command now has some
-more sanitizing of the input: the characters `;`, `|`, and `&` are sfiltered as
+more sanitizing of the input: the characters `;`, `|`, and `&` are filtered as
 before, but also it's filtering `` ` ``, `'`, and `"`.
 
 The code runs `passthru` with the command:
