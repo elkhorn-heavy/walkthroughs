@@ -30,13 +30,17 @@ Clicking the `View sourcecode` link shows the source code for the web page:
 This page is fairly simple, although it does have some interesting things going
 on.
 
-1. At the top of the page, it check if there is a GET parameter called
-   `revelio`. If so, it check if the `admin` session variable is set to `1`, and
-   if not then it uses the `Location` header to redirect to itself.
+1. At the top of the page, it checks if there is a GET parameter called
+   `revelio`. If so, it checks if the `admin` session variable is set to `1`,
+   and if not then it uses the `Location` header to redirect to itself.
 2. Lower down the page, it again checks if the `revelio` GET parameter exists.
    If so, it prints the password to the next level.
 
-So what the security for the page is doing is checking for the `revelio`
+The important thing to note is that the top section of code does a security
+check of the `admin` session variable, but the bottom section of code does not
+check this variable.
+
+What the security for the page is doing is checking for the `revelio`
 parameter - this could be done just by adding it to the URL to produce
 http://natas22.natas.labs.overthewire.org/?revelio. When this URL is visited,
 the code in #1 then checks if the `admin` session variable is set, and if not
