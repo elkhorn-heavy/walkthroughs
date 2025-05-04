@@ -82,6 +82,9 @@ form on the page, but the last challenge demonstrated that HTTP requests can be
 manipulated by the user. If `admin=1` can be sent to this page, then the `admin`
 variable will be set to `1` in the session state.
 
+Before that can be done, it's important that both pages are sharing the same
+session.
+
 ### Step 1: Main Page Session
 
 Going back to the main page and opening the Developer Tools, the Storage tab is
@@ -96,32 +99,31 @@ that of the main page:
 
 ![Colocated Page Session](images/level_21/03_co_index_page_session.png)
 
-Now both pages are sharing the session ID and have the same session. Any session
-variables set in one page are available in the other.
+Now both pages are sharing the session ID and have the same session storage. Any
+session variables set in one page are available in the other.
 
 ### Step 3: Set the `admin` Variable
 
 On the colocated page switch the Developer Tools to the Network tab. Then click
-the `Update` button on the page to send the HTTP request to the server. By right
-clicking the network request and selecting `Edit and Resend`, the `Body` of the
-form submission can be altered to add `&admin=1`. After that all that needs to
-be done is click the `Send` button.
+the `Update` button on the web page to send an HTTP request to the server. By
+right-clicking the network request and selecting `Edit and Resend`, the `Body`
+of the form submission can be altered to add `&admin=1`. After that all that
+needs to be done is click the `Send` button.
 
 ![Colocated Request](images/level_21/04_admin_request.png)
 
 Now there is an `admin` variable in the session with a value of `1`. Since the
-session is shared with the main site, a refresh of that page displays the
-password (pixelated):
+session is shared with the main site, a refresh of the main site's page displays
+the password (pixelated):
 
 ![Password](images/level_21/05_password.png)
 
 ## Key Takeaways
 
 - It's important to never trust user-controlled data
-- Session keys can be changed by the user
+- Session IDs can be changed by the user
 - A security issue in the session handling of one web site can be used to
   exploit sites sharing that session
-- Serialization and deserialization can be dangerous
 
 ## Beyond the Challenge
 
