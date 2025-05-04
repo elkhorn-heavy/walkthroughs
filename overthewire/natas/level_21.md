@@ -60,7 +60,7 @@ with it.
 
 Clicking the link to the colocated site produces:
 
-![The Colocated Site Index Page](images/level_21/00_co_index_page.png)
+![The Colocated Site Index Page](images/level_21/01_co_index_page.png)
 
 This page also has a `View sourcecode` link, and that is where the magic
 happens:
