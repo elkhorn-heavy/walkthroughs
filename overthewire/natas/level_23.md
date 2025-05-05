@@ -14,8 +14,8 @@ used to log into http://natas23.natas.labs.overthewire.org:
 
 ## Initial Analysis
 
-This challenge is similar to all the other levels. It has a `Password` input and
-a `Login` button.
+This challenge is similar to the other levels. It has a `Password` input and a
+`Login` button.
 
 It also has a `View sourcecode` link that seems like a hint.
 
@@ -34,14 +34,14 @@ This page is fairly simple, doing a check of the `passwd` parameter, and if
 correct then displaying the password for `natas24`. The code that checks
 `passwd` is strange:
 
-- It uses `strstr` to check if the password entered by the user includes the
+- It uses `strstr` to check if the password entered by the user _includes_ the
   string `iloveyou`
-- It then uses `> 10` to check if the numeric value of the password is more than 10.
+- It uses `> 10` to check if the numeric value of the password is more than 10.
 
-PHP, and JavaScript and other weakly typed languages, use type coersion when
+PHP, like JavaScript and other weakly typed languages, uses _type coersion_ when
 dealing with variables. So `$REQUEST["passwd"]` can be used as both a string
-in the `strstr` call, and a number in the `>` comparison. The solution is to
-use a password that also evaluates to a number:
+in the `strstr` call, and as a number in the `>` comparison. The solution to
+this challenge is to use a password that also evaluates to a number:
 
 ![Password Entry](images/level_23/02_leet_password.png)
 
